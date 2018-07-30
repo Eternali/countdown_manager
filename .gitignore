@@ -1,9 +1,21 @@
 .DS_Store
-.dart_tool/
+node_modules
+/dist
 
-.packages
-.pub/
+# local env files
+.env.local
+.env.*.local
 
-build/
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-.flutter-plugins
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
