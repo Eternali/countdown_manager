@@ -1,26 +1,32 @@
 <script>
+import Color from './util/Color.js'
+
 import Background from './components/Background.vue'
+import Footer from './components/Footer.vue';
 import Header from './components/Header.vue'
 
 export default {
   name: 'app',
   components: {
     Background,
-    Header
+    Footer,
+    Header,
   },
   data() {
     return {
-      copyrite: '2018',
+      copyYear: 2018,
+      author: 'Conrad Heidebrecht',
     };
   },
   render() {
     return (
       <div id="app">
         <v-app dark>
-          <Background />
+          <Background colors={ this.$root.gradients.takeRandom().colors.map((c) => new Color({ hex: c })) } />
           <Header appName='Countdown Manager' align='right' />
           <v-content>
           </v-content>
+          <Footer copyYear={ this.copyYear } author={ this.author } />
         </v-app>
       </div>
     );

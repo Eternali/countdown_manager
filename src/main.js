@@ -5,9 +5,9 @@ import 'babel-polyfill'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'mdi/css/materialdesignicons.min.css'
 
-import './styles/themes.styl'
-
 // import './styles/debug.css'
+import './styles/themes.styl'
+import store from './store'
 import App from './App.vue'
 
 // currently I have to replicate this for both javascript and css use
@@ -38,5 +38,11 @@ Vue.config.productionTip = false
 // Vue.http.headers.common['Access-Control-Request-Method'] = '*'
 
 new Vue({
+  store,
+  data() {
+    return {
+      gradients: require('./assets/gradients.json'),
+    };
+  },
   render: h => h(App)
 }).$mount('#app')
