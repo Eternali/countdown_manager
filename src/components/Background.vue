@@ -2,12 +2,19 @@
 export default {
   name: 'Background',
   props: {
-    colors: Array,
+    gradient: Array,
   },
   data() {
     return {
-      angle: Math.floor(Math.random() * 180)
     };
+  },
+  computed: {
+    colors: function() {
+      return this.gradient.slice(0, -1);
+    },
+    angle: function() {
+      return this.gradient.slice(-1)[0];
+    },
   },
   render() {
     return (

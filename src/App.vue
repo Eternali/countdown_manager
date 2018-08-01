@@ -1,5 +1,5 @@
 <script>
-import Color from './util/Color.js'
+import { mapState, mapActions } from 'vuex';
 
 import Background from './components/Background.vue'
 import Footer from './components/Footer.vue';
@@ -18,11 +18,27 @@ export default {
       author: 'Conrad Heidebrecht',
     };
   },
+  computed: {
+    ...mapState([
+      'mainGrad',
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'generateBackground',
+    ]),
+  },
+  mounted() {
+    this.generateBackground({
+      gradPool: this.$root.gradients,
+      angle: Math.floor(Math.random() * 180)
+    });
+  },
   render() {
     return (
       <div id="app">
         <v-app dark>
-          <Background colors={ this.$root.gradients.takeRandom().colors.map((c) => new Color({ hex: c })) } />
+          <Background gradient={ this.mainGrad } />
           <Header appName='Countdown Manager' align='right' />
           <v-content>
           </v-content>
