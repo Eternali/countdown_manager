@@ -31,7 +31,7 @@ export default {
   mounted() {
     this.generateBackground({
       gradPool: this.$root.gradients,
-      angle: Math.floor(Math.random() * 180)
+      angle: Math.floor(Math.random() * 180),
     });
   },
   render() {

@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
   name: 'Footer',
@@ -11,9 +11,20 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    correctedColor() {
-      return this.mainGrad.length ? this.mainGrad[0].textPrimary('#333333', '#eeeeee') : '#eeeeee';
+    angle() {
+      return this.mainGrad.length ? this.mainGrad.slice(-1)[0] : 0;
     },
+    correctedColor() {
+      return this.mainGrad.length
+        ? (this.angle > 90 && this.angle < 270
+          ? this.mainGrad[1]
+          : this.mainGrad[0]
+        ).textPrimary('#333333', '#eeeeee')
+        : '#eeeeee';
+    },
+  },
+  mounted() {
+    console.log(this.mainGrad);
   },
   render() {
     return (

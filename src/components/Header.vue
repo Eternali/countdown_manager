@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
   name: 'Header',
@@ -27,12 +27,17 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    correctedColor() {
-      return this.mainGrad.length ? this.mainGrad[0].textPrimary('#333333', '#eeeeee') : '#eeeeee';
+    angle() {
+      return this.mainGrad.length ? this.mainGrad.slice(-1)[0] : 0;
     },
-  },
-  methods: {
-
+    correctedColor() {
+      return this.mainGrad.length
+        ? (this.angle > 90 && this.angle < 270
+          ? this.mainGrad[0]
+          : this.mainGrad[1]
+        ).textPrimary('#333333', '#eeeeee')
+        : '#eeeeee';
+    },
   },
   render() {
     return (
