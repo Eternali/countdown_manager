@@ -7,6 +7,9 @@ export default {
     index: Number,
     fullscreen: Boolean,
   },
+  computed: {
+    countdown
+  },
   render() {
     return (
       <v-layout>
@@ -17,7 +20,7 @@ export default {
           xl6={ this.fullscreen }
         >
           <v-card class='rounded-card'>
-
+            { this.countdown(this.index) }
           </v-card>
         </v-flex>
       </v-layout>
