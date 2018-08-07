@@ -15,12 +15,24 @@ export default new Vuex.Store({
   mutations: {
     generateBackground(state, { gradPool, angle }) {
       state.mainGrad = [...gradPool.takeRandom().colors.map((c) => new Color({ hex: c })), angle];
-    }
+    },
+    initCountdowns(state, { length }) {
+      state.countdowns = [...Array(length)].fill(null);
+    },
+    loadCountDown(state, { indice, id, }) {
+      
+    },
   },
   actions: {
     generateBackground({ commit }, { gradPool, angle }) {
       commit('generateBackground', { gradPool, angle });
-    }
+    },
+    retrieveCountdownsLength({ commit }) {
+
+    },
+    retrieveCountdowns({ commit }, { indices }) {
+
+    },
   },
   getters: {
 

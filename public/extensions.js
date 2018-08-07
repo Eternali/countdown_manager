@@ -58,3 +58,13 @@ Math.randomIn = function(min, max) {
 Math.randomFloor = function(min, max) {
   return this.floor(this.randomIn(min, max));
 }
+
+/**
+ * Generates a string of random numbers.
+ * 
+ * @param {Integer} length Length of string to return
+ * @returns {String} A string of random numbers
+ */
+Math.randomStr = function(length) {
+  return [...Array(length)].map((_) => Math.randomFloor(0, 10)).join('');
+}
