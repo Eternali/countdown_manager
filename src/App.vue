@@ -2,13 +2,15 @@
 import { mapState, mapActions } from 'vuex';
 
 import Background from './components/Background.vue'
-import Footer from './components/Footer.vue';
+import Countdown from './components/Countdown.vue'
+import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
 
 export default {
   name: 'app',
   components: {
     Background,
+    Countdown,
     Footer,
     Header,
   },
@@ -21,18 +23,25 @@ export default {
   computed: {
     ...mapState([
       'mainGrad',
+      'countdowns',
     ]),
   },
   methods: {
     ...mapActions([
       'generateBackground',
+      'retrieveCountdownsLength',
+      'retrieveCountdowns',
     ]),
   },
   mounted() {
-    this.generateBackground({
-      gradPool: this.$root.gradients,
-      angle: Math.floor(Math.random() * 180),
-    });
+    this.retrieveCountdownsLength()
+      .then((length) => {
+        this.generateBackground({
+          gradPool: this.$root.gradients,
+          angle: Math.floor(Math.random() * 180),
+        });
+        return length;
+      }).then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients }));
   },
   render() {
     return (
@@ -41,6 +50,9 @@ export default {
           <Background gradient={ this.mainGrad } />
           <Header appName='Countdown Manager' align='right' />
           <v-content>
+            { this.countdowns.map((cd) => (
+              <Countdown id={ cd === null ? null : cd.id } fullscreen={ false } />
+            )) }
           </v-content>
           <Footer copyYear={ this.copyYear } author={ this.author } />
         </v-app>

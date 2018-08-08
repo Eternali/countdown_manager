@@ -8,7 +8,7 @@ class Countdown {
     when,
     timer,
   }) {
-    this.id = id || this.generateID();
+    this.id = id || Countdown.generateID();
     this.name = name;
     this.image = image;
     this.gradient = gradient;

@@ -23,9 +23,6 @@ export default {
         : '#eeeeee';
     },
   },
-  mounted() {
-    console.log(this.mainGrad);
-  },
   render() {
     return (
       <v-footer height='auto' color='transparent'>
