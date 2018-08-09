@@ -9,9 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     mainGrad: [],
-    countdowns: [
-
-    ],
+    countdowns: [],
   },
   mutations: {
     generateBackground(state, { gradPool, angle }) {

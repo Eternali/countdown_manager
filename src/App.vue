@@ -1,8 +1,9 @@
 <script>
 import { mapState, mapActions } from 'vuex';
+import { breakpoints } from './vuetify-helpers.js';
 
 import Background from './components/Background.vue'
-import Countdown from './components/Countdown.vue'
+import Countdowns from './components/Countdowns.vue'
 import Footer from './components/Footer.vue'
 import Header from './components/Header.vue'
 
@@ -10,7 +11,7 @@ export default {
   name: 'app',
   components: {
     Background,
-    Countdown,
+    Countdowns,
     Footer,
     Header,
   },
@@ -23,7 +24,6 @@ export default {
   computed: {
     ...mapState([
       'mainGrad',
-      'countdowns',
     ]),
   },
   methods: {
@@ -34,6 +34,7 @@ export default {
     ]),
   },
   mounted() {
+    breakpoints.bind(window);
     this.retrieveCountdownsLength()
       .then((length) => {
         this.generateBackground({
@@ -50,9 +51,7 @@ export default {
           <Background gradient={ this.mainGrad } />
           <Header appName='Countdown Manager' align='right' />
           <v-content>
-            { this.countdowns.map((cd) => (
-              <Countdown id={ cd === null ? null : cd.id } fullscreen={ false } />
-            )) }
+            <Countdowns />
           </v-content>
           <Footer copyYear={ this.copyYear } author={ this.author } />
         </v-app>
@@ -79,5 +78,8 @@ export default {
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   text-align center
+
+.rounded-card
+  border-radius $cardrad
 
 </style>
