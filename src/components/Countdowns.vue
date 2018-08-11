@@ -36,8 +36,8 @@ export default {
   render() {
     return (
       <GridView
-        spaceX={ 1 }
-        spaceY={ 1 }
+        spaceX={ 0.5 }
+        spaceY={ 1.0 }
         crossAxisCount={ this.gridSize }
         count={ this.countdowns.length }
         builder={ this.buildCountdown }
