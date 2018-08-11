@@ -1,11 +1,10 @@
 <script>
 import { mapState, mapActions } from 'vuex';
-import { breakpoints } from './vuetify-helpers.js';
 
-import Background from './components/Background.vue'
-import Countdowns from './components/Countdowns.vue'
-import Footer from './components/Footer.vue'
-import Header from './components/Header.vue'
+import Background from '@/components/Background.vue'
+import Countdowns from '@/components/Countdowns.vue'
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
 
 export default {
   name: 'app',
@@ -34,7 +33,6 @@ export default {
     ]),
   },
   mounted() {
-    breakpoints.bind(window);
     this.retrieveCountdownsLength()
       .then((length) => {
         this.generateBackground({

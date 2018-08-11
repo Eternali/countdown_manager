@@ -17,10 +17,14 @@ export default {
   },
   computed: {
     length() {
-      return this.childIterable.length
+      return this.childIterable.length;
     },
     childIterable() {
+      console.log(this.elwidth);
       return [...Array(this.children ? this.children.length : this.count)];
+    },
+    elwidth() {
+      return (100 / this.crossAxisCount) - (this.spaceX * 2 * this.crossAxisCount);
     }
   },
   methods: {
@@ -49,7 +53,12 @@ export default {
     return (
       <v-layout align-start justify-start row wrap class='ma-0 pa-0'>
         { this.childIterable.map((_, i) => (
-          <div class={ this.getMargins(i) }>{ this.getChild(i) }</div>
+          <div
+            style={ `width: ${this.elwidth}vw;` }
+            class={ this.getMargins(i) }
+          >
+            { this.getChild(i) }
+          </div>
           )) }
       </v-layout>
     );

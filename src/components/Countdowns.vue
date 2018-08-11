@@ -1,7 +1,5 @@
 <script>
 import { mapState, mapActions } from 'vuex';
-import { breakpoint } from 'vuetify/src/components/Vuetify/mixins/breakpoint.ts';
-import { breakpoints } from '@/vuetify-helpers.js'
 
 import Countdown from './Countdown.vue';
 import GridView from './GridView.vue';
@@ -11,9 +9,6 @@ export default {
   props: {
 
   },
-  mixins: [
-    breakpoint,
-  ],
   components: {
     Countdown,
     GridView,
@@ -23,11 +18,11 @@ export default {
       'countdowns',
     ]),
     gridSize() {
-      if (breakpoints.xs) return 1;
-      else if (breakpoints.sm) return 2;
-      else if (breakpoints.md) return 3;
-      else if (breakpoints.lg) return 5;
-      else if (breakpoints.xl) return 6;
+      if (this.wXS) return 1;
+      else if (this.wSM) return 2;
+      else if (this.wMD) return 3;
+      else if (this.wLG) return 5;
+      else if (this.wXL) return 6;
       else return 1;
     },
   },

@@ -1,6 +1,4 @@
 <script>
-import { breakpoints } from '@/vuetify-helpers.js';
-
 export default {
   name: 'Countdown',
   props: {
@@ -16,7 +14,7 @@ export default {
   render() {
     return (
       <v-card class='mx-2 rounded-card'>
-        { this.countdown ? breakpoints.xs.toString() : 'Loading' }
+        { this.countdown ? this.wSM.toString() : 'Loading' }
       </v-card>
     );
   }

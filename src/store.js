@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import Color from './util/Color.js'
-import Countdown from './util/Countdown.js';
+import Color from '@/util/Color.js'
+import Countdown from '@/util/Countdown.js';
 
 Vue.use(Vuex)
 
