@@ -22,8 +22,8 @@ export default {
     childIterable() {
       return [...Array(this.children ? this.children.length : this.count)];
     },
-    elwidth() {
-      return (100 / this.crossAxisCount) - (this.spaceX * (this.crossAxisCount - 1));
+    columns() {
+      return Math.ceil(this.length / this.crossAxisCount);
     }
   },
   methods: {
@@ -55,20 +55,29 @@ export default {
         margins[1] += this.spaceX;
       }
 
-      console.log(`${indice}: ${margins.join('% ')}`);
-      return margins.join('% ') + '%;';
+      return margins.join('% ') + '%';
     }
   },
   render() {
     return (
-      <v-layout align-start justify-start row wrap class='ma-0 pa-0'>
-        { this.childIterable.map((_, i) => (
-          <div
-            style={ `width: ${this.elwidth}%; margin: ${this.getMargins(i)}` }
-          >
-            { this.getChild(i) }
-          </div>
-          )) }
+      <v-layout align-start justify-start column class='ma-0 pa-0' style='width: 100%'>
+        {
+          [...Array(this.columns)].map((_, c) => (
+            <v-layout align-start justify-start row class='ma-0 pa-0' style='width: 100%'>
+              {
+                [...Array(this.crossAxisCount)].map((_, r) => {
+                  let indice = c * this.crossAxisCount + r;
+                  return (<v-flex style={ `width: 100%; margin: ${this.getMargins(indice)};` }>
+                    { indice < this.length
+                      ? this.getChild(indice)
+                      : null
+                    }
+                  </v-flex>);
+                })
+              }
+            </v-layout>
+          ))
+        }
       </v-layout>
     );
   }
