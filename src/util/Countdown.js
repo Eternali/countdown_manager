@@ -6,18 +6,20 @@ class Countdown {
     image,
     gradient,
     when,
-    timer,
   }) {
     this.id = id || Countdown.generateID();
     this.name = name;
     this.image = image;
     this.gradient = gradient;
-    if (when && timer)
-      throw new Error('Only one of [when] or [timer] can be defined.');
-    if (when) this.when = when;
-    else if (timer) this.timer = timer;
-    else
-      throw new Error('[when] or [timer] must be defined.');
+    this.when = when;
+  }
+
+  until(now) {
+    let diff = new Date(null);
+    let ms = this.when - now;
+    let isPast = ms < 0;
+    diff.setTime(Math.abs(ms));
+    return {isPast, diff };
   }
 
   /**

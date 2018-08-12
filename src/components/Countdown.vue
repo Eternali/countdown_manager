@@ -8,13 +8,37 @@ export default {
       type: Boolean,
     }
   },
-  computed: {
-
+  methods: {
+    formatEndTime(when) {
+      return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
+    },
+    dateComponent(name, value, isEnd = false) {
+      return value > 0 ? `${value} ${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` : '';
+    },
+    formatUntil(countdown) {
+      let {isPast, diff} = countdown.until(new Date());
+      return this.dateComponent('year', diff.getFullYear() - 1970) + // for epoch
+        this.dateComponent('month', diff.getMonth()) +
+        this.dateComponent('day', diff.getDate()) +
+        this.dateComponent('hour', diff.getHours()) +
+        this.dateComponent('minute', diff.getMinutes()) +
+        this.dateComponent('second', diff.getSeconds(), true);
+    },
   },
   render() {
     return (
-      <v-card class='mx-2 rounded-card'>
-        { this.countdown ? this.wSM.toString() : 'Loading' }
+      <v-card class='rounded-card' style='--aspect-ratio: 1/1;'>
+        <div class='centered'>
+          {
+            this.countdown
+              ? <div>
+                  <h3>{ this.countdown.name }</h3>
+                  <h5>{ this.formatEndTime(this.countdown.when) }</h5>
+                  <h2>{ this.formatUntil(this.countdown) }</h2>
+                </div>
+              : <h2>Loading</h2>
+          }
+        </div>
       </v-card>
     );
   }
@@ -22,8 +46,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '../styles/boxes.css'
 @import '../styles/themes.styl'
 
-
+.centered
+  height 100%
+  display flex
+  justify-content center
+  align-items center
 
 </style>
