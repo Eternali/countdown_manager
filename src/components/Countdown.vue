@@ -4,6 +4,7 @@ export default {
   props: {
     countdown: Object,
     now: Date,
+    angle: Number,
     fullscreen: {
       default: false,
       type: Boolean,
@@ -14,32 +15,42 @@ export default {
       return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
     },
     dateComponent(name, value, isEnd = false) {
-      return value > 0 ? `${value.toString().padLeft(2, '0')}${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` : '';
+      return value > 0
+        ? (<span class='unit'>
+            <span class='value'>{ value.toString().padLeft(2, '0') }</span>
+            { `${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
+          </span>)
+        : '';
     },
     formatUntil(countdown) {
       let {isPast, diff} = countdown.until(this.now);
-      return this.dateComponent('year', diff.getFullYear() - 1970) + // for epoch
-        this.dateComponent('month', diff.getMonth()) +
-        this.dateComponent('day', diff.getDate()) +
-        this.dateComponent('hour', diff.getHours()) +
-        this.dateComponent('minute', diff.getMinutes()) +
-        this.dateComponent('second', diff.getSeconds(), true);
+      return (<div>
+        { this.dateComponent('year', diff.getFullYear() - 1970) }
+        { this.dateComponent('month', diff.getMonth()) }
+        { this.dateComponent('day', diff.getDate()) }
+        { this.dateComponent('hour', diff.getHours()) }
+        { this.dateComponent('minute', diff.getMinutes()) }
+        { this.dateComponent('second', diff.getSeconds(), true) }
+      </div>);
     },
   },
   render() {
     return (
       <v-card class='rounded-card' style='--aspect-ratio: 1/1;'>
-        <div class='centered'>
-          {
-            this.countdown
-              ? <div>
-                  <h3>{ this.countdown.name }</h3>
-                  <h5>{ this.formatEndTime(this.countdown.when) }</h5>
-                  <h2>{ this.formatUntil(this.countdown) }</h2>
-                </div>
-              : <h2>Loading</h2>
-          }
-        </div>
+        <div
+        class='centered'
+        style={ this.countdown
+          ? `background: linear-gradient(${this.angle}deg, ${ this.countdown.gradient.map((c) => '#' + c.hex).join(', ') })`
+          : '' }
+        >{
+          this.countdown
+            ? <div>
+                <h3>{ this.countdown.name }</h3>
+                <h5>{ this.formatEndTime(this.countdown.when) }</h5>
+                <h2>{ this.formatUntil(this.countdown) }</h2>
+              </div>
+            : <h2>Loading</h2>
+        }</div>
       </v-card>
     );
   }
@@ -56,5 +67,23 @@ export default {
   justify-content center
   align-items center
   padding: 2%
+
+h3
+  font-family 'Elianto', Arial, Helvetica, sans-serif
+  font-size 2.2em
+
+h5
+  font-size 1.2em
+
+h2
+  font-family 'Metropolis', Arial, Helvetica, sans-serif
+  font-size 1.8em
+  letter-spacing 0.15em
+  & span.unit
+    margin-right 0.3em
+  & span.value
+    margin-right 0.1em
+    font-family 'Metropolis', Arial, Helvetica, sans-serif
+    font-size 2.6em
 
 </style>

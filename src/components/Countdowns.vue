@@ -12,6 +12,7 @@ export default {
   },
   computed: {
     ...mapState([
+      'mainGrad',
       'countdowns',
       'now',
     ]),
@@ -19,15 +20,20 @@ export default {
       if (this.wXS) return 1;
       else if (this.wSM) return 2;
       else if (this.wMD) return 3;
-      else if (this.wLG) return 5;
-      else if (this.wXL) return 6;
+      else if (this.wLG) return 4;
+      else if (this.wXL) return 5;
       else return 1;
     },
   },
   methods: {
     buildCountdown(indice) {
       return (
-        <Countdown countdown={ this.countdowns[indice] } now={ this.now } fullscreen={ false } />
+        <Countdown
+          countdown={ this.countdowns[indice] }
+          now={ this.now }
+          angle={ this.mainGrad.slice(-1)[0] }
+          fullscreen={ false }
+        />
       );
     }
   },

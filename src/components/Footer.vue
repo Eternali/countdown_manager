@@ -25,7 +25,7 @@ export default {
   },
   render() {
     return (
-      <v-footer height='auto' color='transparent'>
+      <v-footer height='auto' color='transparent' class='mt-1'>
         <v-flex xs12 py-3 text-xs-center style={ `color: ${this.correctedColor}` } class='footer-text'>
           &copy; {this.copyYear} - <strong>{ this.author }</strong>
         </v-flex>
