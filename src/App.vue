@@ -30,6 +30,7 @@ export default {
       'generateBackground',
       'retrieveCountdownsLength',
       'retrieveCountdowns',
+      'attachNowUpdater'
     ]),
   },
   mounted() {
@@ -40,7 +41,9 @@ export default {
           angle: Math.floor(Math.random() * 180),
         });
         return length;
-      }).then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients }));
+      })
+      .then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients }))
+      .then((_) => this.attachNowUpdater(window));
   },
   render() {
     return (

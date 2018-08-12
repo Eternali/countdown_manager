@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     mainGrad: [],
     countdowns: [],
+    now: new Date(),
   },
   mutations: {
     generateBackground(state, { gradPool, angle }) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     loadCountdown(state, { indice, countdown}) {
       state.countdowns.splice(indice, 1, countdown);
     },
+    updateNow(state, current) {
+      state.now = current;
+    }
   },
   actions: {
     generateBackground({ commit }, { gradPool, angle }) {
@@ -54,6 +58,11 @@ export default new Vuex.Store({
         }, 2000);
         }
       );
+    },
+    attachNowUpdater({ commit }, dom) {
+      dom.setInterval(() => {
+        commit('updateNow', new Date());
+      }, 1000);
     },
   },
   getters: {

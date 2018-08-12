@@ -3,6 +3,7 @@ export default {
   name: 'Countdown',
   props: {
     countdown: Object,
+    now: Date,
     fullscreen: {
       default: false,
       type: Boolean,
@@ -13,10 +14,10 @@ export default {
       return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
     },
     dateComponent(name, value, isEnd = false) {
-      return value > 0 ? `${value} ${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` : '';
+      return value > 0 ? `${value.toString().padLeft(2, '0')}${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` : '';
     },
     formatUntil(countdown) {
-      let {isPast, diff} = countdown.until(new Date());
+      let {isPast, diff} = countdown.until(this.now);
       return this.dateComponent('year', diff.getFullYear() - 1970) + // for epoch
         this.dateComponent('month', diff.getMonth()) +
         this.dateComponent('day', diff.getDate()) +
@@ -54,5 +55,6 @@ export default {
   display flex
   justify-content center
   align-items center
+  padding: 2%
 
 </style>

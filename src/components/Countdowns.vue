@@ -6,9 +6,6 @@ import GridView from './GridView.vue';
 
 export default {
   name: 'Countdowns',
-  props: {
-
-  },
   components: {
     Countdown,
     GridView,
@@ -16,6 +13,7 @@ export default {
   computed: {
     ...mapState([
       'countdowns',
+      'now',
     ]),
     gridSize() {
       if (this.wXS) return 1;
@@ -29,7 +27,7 @@ export default {
   methods: {
     buildCountdown(indice) {
       return (
-        <Countdown countdown={ this.countdowns[indice] } fullscreen={ false } />
+        <Countdown countdown={ this.countdowns[indice] } now={ this.now } fullscreen={ false } />
       );
     }
   },
