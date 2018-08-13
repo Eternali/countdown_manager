@@ -69,6 +69,7 @@ export default {
 
 <style lang="stylus">
 @import './styles/themes.styl'
+@import url(https://fonts.googleapis.com/css?family=Orbitron)
 
 @font-face
   font-family Anders
@@ -81,6 +82,10 @@ export default {
 @font-face
   font-family Elianto
   src url('./assets/fonts/Elianto-Regular.ttf')
+
+@font-face
+  font-family CPMono
+  src url('./assets/fonts/CPMono_Plain.otf')
 
 *, *:after, *:before
   box-sizing border-box

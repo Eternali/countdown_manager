@@ -11,16 +11,18 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    correctedColor() {
+  },
+  methods: {
+    correctedColor(x, y) {
       return this.mainGrad.colors
-        ? this.mainGrad.textAt(0, -0.9, '#333333', '#eeeeee')
+        ? this.mainGrad.textAt(x, y, '#333333', '#eeeeee')
         : '#eeeeee';
     },
   },
   render() {
     return (
       <v-footer height='auto' color='transparent' class='mt-1'>
-        <v-flex xs12 py-3 text-xs-center style={ `color: ${this.correctedColor}` } class='footer-text'>
+        <v-flex xs12 py-3 text-xs-center style={ `color: ${this.correctedColor(0, -0.9)}` } class='footer-text'>
           &copy; {this.copyYear} - <strong>{ this.author }</strong>
         </v-flex>
       </v-footer>

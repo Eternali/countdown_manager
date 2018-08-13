@@ -7,19 +7,30 @@ export default {
     fullscreen: {
       default: false,
       type: Boolean,
-    }
+    },
+    deleteAction: Function,
+    editAction: Function,
   },
   methods: {
     formatEndTime(when) {
       return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
     },
     dateComponent(name, value, forceDraw = false, isEnd = false) {
-      return value !== 0 || forceDraw
+      let aval = Math.abs(value);
+      return aval !== 0 || forceDraw
         ? (<span class='unit'>
-            <span class='value'>{ value.toString().padLeft(2, '0') }</span>
-            { `${name}${Math.abs(value) > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
+            <span class='value'>{ aval.toString().padLeft(2, '0') }</span>
+            { `${name}${Math.abs(aval) > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
           </span>)
         : '';
+    },
+    isNegative(duration) {
+      return duration.seconds() < 0 ||
+        duration.minutes() < 0
+        duration.hours() < 0
+        duration.days() < 0
+        duration.months() < 0
+        duration.years() < 0;
     },
     formatUntil(countdown) {
       let diff = countdown.until(this.now);
@@ -30,6 +41,7 @@ export default {
         { this.dateComponent('hour', diff.hours()) }
         { this.dateComponent('minute', diff.minutes()) }
         { this.dateComponent('second', diff.seconds(), true, true) }
+        { this.isNegative(diff) ? '(past)' : '' }
       </div>);
     },
     correctedColor(x, y) {
@@ -40,7 +52,7 @@ export default {
   },
   render() {
     return (
-      <v-card class='rounded-card' style='--aspect-ratio: 1/1;'>
+      <v-card class='rounded-card countdown' style='--aspect-ratio: 1/1;'>
         <div
         class='centered'
         style={ this.countdown
@@ -57,6 +69,16 @@ export default {
               </div>
             : <h2 style={ `color: ${this.correctedColor(0, 0)}` }>Loading</h2>
         }</div>
+        <div class='deleter'>
+          <v-btn
+            dark
+            icon
+            style={ `color: ${this.correctedColor(0.9, 0.9)}` }
+            onClick={ this.deleteAction }
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
       </v-card>
     );
   }
@@ -67,6 +89,16 @@ export default {
 @import '../styles/boxes.css'
 @import '../styles/themes.styl'
 
+.countdown:hover
+  & .deleter
+    display block
+
+.deleter
+  position absolute
+  display none
+  top 0
+  right 0
+
 .centered
   height 100%
   display flex
@@ -76,20 +108,22 @@ export default {
 
 h3
   font-family 'Elianto', Arial, Helvetica, sans-serif
-  font-size 2.2em
+  font-size 2.0em
 
 h5
   font-family 'Elianto', Arial, Helvetica, sans-serif
-  font-size 1.2em
+  font-size 1em
+  padding-bottom 0.4em
 
 h2
-  font-family 'Metropolis', Arial, Helvetica, sans-serif
-  font-size 1.8em
+  font-family 'CPMono', Arial, Helvetica, sans-serif
+  font-size 1.5em
   letter-spacing 0.15em
+  line-height 2.2em
   & span.unit
     margin-right 0.3em
   & span.value
-    font-family 'Metropolis', Arial, Helvetica, sans-serif
-    font-size 2.6em
+    font-family 'CPMono', Arial, Helvetica, sans-serif
+    font-size 2.3em
 
 </style>

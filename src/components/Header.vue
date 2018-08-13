@@ -27,9 +27,11 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    correctedColor() {
+  },
+  methods: {
+    correctedColor(x, y) {
       return this.mainGrad.colors
-        ? this.mainGrad.textAt(0, 0.9, '#333333', '#eeeeee')
+        ? this.mainGrad.textAt(x, y, '#333333', '#eeeeee')
         : '#eeeeee';
     },
   },
@@ -39,7 +41,7 @@ export default {
         <v-toolbar app flat absolute class='transparent'>
           <v-spacer></v-spacer>
           <h2
-            style={ `color: ${this.correctedColor}` }
+            style={ `color: ${this.correctedColor(0, 0.9)}` }
           >
             { this.appName }
           </h2>
@@ -49,18 +51,18 @@ export default {
           <v-spacer></v-spacer>
           <v-toolbar-items class='hidden-sm-and-down'>
             {
-              this.items.map((item) => item.icon
+              this.items.map((item, i) => item.icon
                 ? (<v-btn left flat
                   key={ item.name }
                   onClick={ item.click }
-                  style={ `color: ${this.correctedColor}` }
+                  style={ `color: ${this.correctedColor(0.9 - 0.05 * i, 0.9)}` }
                 >
                   <v-icon>{ item.icon }</v-icon>
                 </v-btn>)
                 : (<v-btn flat ripple
                   key={ item.name }
                   onClick={ item.click }
-                  style={ `color: ${this.correctedColor}` }
+                  style={ `color: ${this.correctedColor(0 - 0.05 * i, 0.9)}` }
                 >
                   item.name
                 </v-btn>)

@@ -32,6 +32,8 @@ export default {
           countdown={ this.countdowns[index] }
           now={ this.now }
           fullscreen={ false }
+          deleteAction={ () => {} }
+          editAction={ () => {} }
         />
       );
     }
