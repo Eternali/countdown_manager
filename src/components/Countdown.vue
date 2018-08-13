@@ -4,7 +4,6 @@ export default {
   props: {
     countdown: Object,
     now: Date,
-    angle: Number,
     fullscreen: {
       default: false,
       type: Boolean,
@@ -33,6 +32,11 @@ export default {
         { this.dateComponent('second', diff.getSeconds(), true) }
       </div>);
     },
+    correctedColor(x, y) {
+      return this.countdown
+        ? this.countdown.gradient.textAt(x, y, '#333333', '#eeeeee')
+        : '#eeeeee'
+    }
   },
   render() {
     return (
@@ -40,14 +44,16 @@ export default {
         <div
         class='centered'
         style={ this.countdown
-          ? `background: linear-gradient(${this.angle}deg, ${ this.countdown.gradient.map((c) => '#' + c.hex).join(', ') })`
+          ? 'background: linear-gradient(' +
+            `${this.countdown.gradient.angle}deg,` +
+            `${ this.countdown.gradient.colors.map((c) => '#' + c.hex).join(', ') })`
           : '' }
         >{
           this.countdown
             ? <div>
-                <h3>{ this.countdown.name }</h3>
-                <h5>{ this.formatEndTime(this.countdown.when) }</h5>
-                <h2>{ this.formatUntil(this.countdown) }</h2>
+                <h3 style={ `color: ${this.correctedColor(0, 0.85)}` }>{ this.countdown.name }</h3>
+                <h5 style={ `color: ${this.correctedColor(0, 0.7)}` }>{ this.formatEndTime(this.countdown.when) }</h5>
+                <h2 style={ `color: ${this.correctedColor(0, -0.15)}` }>{ this.formatUntil(this.countdown) }</h2>
               </div>
             : <h2>Loading</h2>
         }</div>
@@ -73,6 +79,7 @@ h3
   font-size 2.2em
 
 h5
+  font-family 'Elianto', Arial, Helvetica, sans-serif
   font-size 1.2em
 
 h2

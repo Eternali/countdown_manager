@@ -22,12 +22,6 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    bgColors: function() {
-      return this.mainGrad.slice(0, -1);
-    },
-    bgAngle: function() {
-      return this.mainGrad.slice(-1)[0];
-    },
   },
   methods: {
     ...mapActions([
@@ -46,7 +40,7 @@ export default {
         });
         return length;
       })
-      .then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients }))
+      .then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients, angle: this.mainGrad.angle }))
       .then((_) => this.attachNowUpdater(window));
   },
   render() {
@@ -54,7 +48,12 @@ export default {
       <div id="app">
         <v-app
         dark
-        style={ `background: linear-gradient(${this.bgAngle}deg, ${ this.bgColors.map((c) => '#' + c.hex).join(', ') })` }
+        style={
+            this.mainGrad.colors
+              ? ('background: linear-gradient(' +
+                `${this.mainGrad.angle}deg, ${ this.mainGrad.colors.map((c) => '#' + c.hex).join(', ') })`)
+              : ''
+          }
         >
           <Header appName='Countdown Manager' align='right' />
           <v-content>

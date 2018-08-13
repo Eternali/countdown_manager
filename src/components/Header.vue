@@ -27,15 +27,9 @@ export default {
     ...mapState([
       'mainGrad',
     ]),
-    angle() {
-      return this.mainGrad.length ? this.mainGrad.slice(-1)[0] : 0;
-    },
     correctedColor() {
-      return this.mainGrad.length
-        ? (this.angle > 90 && this.angle < 270
-          ? this.mainGrad[0]
-          : this.mainGrad[1]
-        ).textPrimary('#333333', '#eeeeee')
+      return this.mainGrad.colors
+        ? this.mainGrad.textAt(0, 0.9, '#333333', '#eeeeee')
         : '#eeeeee';
     },
   },

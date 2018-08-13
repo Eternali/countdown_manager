@@ -19,8 +19,8 @@ class Color {
       .map((c) => parseInt(c, 16));
   }
 
-  textPrimary(dark, light) {
-    return this.rgba.every((c) => c > 130) ? dark : light;
+  textPrimary(dark, light, threshold = 130) {
+    return this.rgba.every((c) => c > threshold) ? dark : light;
   }
 
 }

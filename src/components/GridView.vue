@@ -27,28 +27,28 @@ export default {
     }
   },
   methods: {
-    getChild(indice) {
+    getChild(index) {
       if (this.children) {
-        return this.children[indice];
+        return this.children[index];
       } else {
-        return this.builder(indice);
+        return this.builder(index);
       }
     },
-    getMargins(indice) {
+    getMargins(index) {
       let margins = [0, 0, 0, 0]; // top, right, bottom, left
       
-      if (indice < this.crossAxisCount) {
+      if (index < this.crossAxisCount) {
         margins[2] += this.spaceY;
-      } else if (indice >= this.length - this.crossAxisCount) {
+      } else if (index >= this.length - this.crossAxisCount) {
         margins[0] += this.spaceY;
       } else {
         margins[0] += this.spaceY;
         margins[2] += this.spaceY;
       }
 
-      if (indice % this.crossAxisCount === 0) {
+      if (index % this.crossAxisCount === 0) {
         margins[1] += this.spaceX;
-      } else if (indice % this.crossAxisCount === this.crossAxisCount - 1) {
+      } else if (index % this.crossAxisCount === this.crossAxisCount - 1) {
         margins[3] += this.spaceX;
       } else {
         margins[3] += this.spaceX;
@@ -66,10 +66,10 @@ export default {
             <v-layout align-start justify-start row class='ma-0 pa-0' style='width: 100%'>
               {
                 [...Array(this.crossAxisCount)].map((_, r) => {
-                  let indice = c * this.crossAxisCount + r;
-                  return (<v-flex style={ `width: 100%; margin: ${this.getMargins(indice)};` }>
-                    { indice < this.length
-                      ? this.getChild(indice)
+                  let index = c * this.crossAxisCount + r;
+                  return (<v-flex style={ `width: 100%; margin: ${this.getMargins(index)};` }>
+                    { index < this.length
+                      ? this.getChild(index)
                       : null
                     }
                   </v-flex>);

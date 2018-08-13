@@ -26,12 +26,11 @@ export default {
     },
   },
   methods: {
-    buildCountdown(indice) {
+    buildCountdown(index) {
       return (
         <Countdown
-          countdown={ this.countdowns[indice] }
+          countdown={ this.countdowns[index] }
           now={ this.now }
-          angle={ this.mainGrad.slice(-1)[0] }
           fullscreen={ false }
         />
       );
