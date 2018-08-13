@@ -14,12 +14,15 @@ class Countdown {
     this.when = when;
   }
 
+  /**
+   * Calculates duration between the timer and now using moment.js.
+   * @param {Date} now Date of when 'now' should be
+   * @returns {moment.duration} Measure of the time between this countdown's completion and now
+   */
   until(now) {
-    let diff = new Date(null);
-    let ms = this.when - now;
-    let isPast = ms < 0;
-    diff.setTime(Math.abs(ms));
-    return {isPast, diff };
+    let mnow = moment(now);
+    let mwhen = moment(this.when);
+    return moment.duration(mwhen.diff(mnow));
   }
 
   /**

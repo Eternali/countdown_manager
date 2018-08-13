@@ -47,7 +47,7 @@ export default {
         </v-toolbar>
         <v-toolbar app flat absolute class='transparent'>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
+          <v-toolbar-items class='hidden-sm-and-down'>
             {
               this.items.map((item) => item.icon
                 ? (<v-btn left flat
@@ -67,6 +67,24 @@ export default {
               )
             }
           </v-toolbar-items>
+          <v-menu transition='slide-y-transition' bottom left class='hidden-md-and-up'>
+            <v-btn
+              slot='activator'
+              dark
+              icon
+              style={ `color: ${this.correctedColor}` }
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <v-list>{
+              this.items.map((item, i) => (
+                <v-list-tile key={ item.name } onClick={ item.click }>
+                  <v-list-tile-avatar><v-icon>{ item.icon || '' }</v-icon></v-list-tile-avatar>
+                  <v-list-tile-title>{ item.name.toUpperCase() }</v-list-tile-title>
+                </v-list-tile>
+              ))
+            }</v-list>
+          </v-menu>
         </v-toolbar>
       </div>
     );

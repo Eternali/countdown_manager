@@ -13,23 +13,23 @@ export default {
     formatEndTime(when) {
       return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
     },
-    dateComponent(name, value, isEnd = false) {
-      return value > 0
+    dateComponent(name, value, forceDraw = false, isEnd = false) {
+      return value !== 0 || forceDraw
         ? (<span class='unit'>
             <span class='value'>{ value.toString().padLeft(2, '0') }</span>
-            { `${name}${value > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
+            { `${name}${Math.abs(value) > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
           </span>)
         : '';
     },
     formatUntil(countdown) {
-      let {isPast, diff} = countdown.until(this.now);
+      let diff = countdown.until(this.now);
       return (<div>
-        { this.dateComponent('year', diff.getFullYear() - 1970) }
-        { this.dateComponent('month', diff.getMonth()) }
-        { this.dateComponent('day', diff.getDate()) }
-        { this.dateComponent('hour', diff.getHours()) }
-        { this.dateComponent('minute', diff.getMinutes()) }
-        { this.dateComponent('second', diff.getSeconds(), true) }
+        { this.dateComponent('year', diff.years()) }
+        { this.dateComponent('month', diff.months()) }
+        { this.dateComponent('day', diff.days()) }
+        { this.dateComponent('hour', diff.hours()) }
+        { this.dateComponent('minute', diff.minutes()) }
+        { this.dateComponent('second', diff.seconds(), true, true) }
       </div>);
     },
     correctedColor(x, y) {
@@ -55,7 +55,7 @@ export default {
                 <h5 style={ `color: ${this.correctedColor(0, 0.7)}` }>{ this.formatEndTime(this.countdown.when) }</h5>
                 <h2 style={ `color: ${this.correctedColor(0, -0.15)}` }>{ this.formatUntil(this.countdown) }</h2>
               </div>
-            : <h2>Loading</h2>
+            : <h2 style={ `color: ${this.correctedColor(0, 0)}` }>Loading</h2>
         }</div>
       </v-card>
     );
@@ -89,7 +89,6 @@ h2
   & span.unit
     margin-right 0.3em
   & span.value
-    margin-right 0.1em
     font-family 'Metropolis', Arial, Helvetica, sans-serif
     font-size 2.6em
 
