@@ -9,13 +9,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    mainGrad: [],
-    countdowns: [],
+    mainGrad: null,
+    activeBg: null,
     now: new Date(),
+    countdowns: [],
+    focused: null,
   },
   mutations: {
     generateBackground(state, { gradPool, angle }) {
       state.mainGrad = new Gradient(gradPool.takeRandom().colors.map((c) => new Color({ hex: c })), angle);
+    },
+    setActiveBackground(state, gradient) {
+      state.activeBg = gradient || state.mainGrad;
+    },
+    updateNow(state, current) {
+      state.now = current;
     },
     initCountdowns(state, { length }) {
       state.countdowns = [...Array(length)].fill(null);
@@ -26,13 +34,18 @@ export default new Vuex.Store({
     deleteCountdown(state, index) {
       state.countdowns.splice(index, 1);
     },
-    updateNow(state, current) {
-      state.now = current;
-    }
   },
   actions: {
     generateBackground({ commit }, { gradPool, angle }) {
       commit('generateBackground', { gradPool, angle });
+    },
+    goHome({ commit }) {
+      commit('setActiveBackground', null);
+    },
+    attachNowUpdater({ commit }, dom) {
+      dom.setInterval(() => {
+        commit('updateNow', new Date());
+      }, 1000);
     },
     retrieveCountdownsLength({ commit }) {
       return new Promise(
@@ -70,11 +83,6 @@ export default new Vuex.Store({
           res();
         }
       );
-    },
-    attachNowUpdater({ commit }, dom) {
-      dom.setInterval(() => {
-        commit('updateNow', new Date());
-      }, 1000);
     },
   },
   getters: {

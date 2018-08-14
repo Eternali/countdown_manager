@@ -26,10 +26,10 @@ export default {
     },
     isNegative(duration) {
       return duration.seconds() < 0 ||
-        duration.minutes() < 0
-        duration.hours() < 0
-        duration.days() < 0
-        duration.months() < 0
+        duration.minutes() < 0 ||
+        duration.hours() < 0 ||
+        duration.days() < 0 ||
+        duration.months() < 0 ||
         duration.years() < 0;
     },
     formatUntil(countdown) {
@@ -52,38 +52,39 @@ export default {
   },
   render() {
     return (
-      <v-card
-        class='rounded-card countdown'
-        style={
-          '--aspect-ratio: 1/1; ' +
-          (this.countdown
-            ? 'background: linear-gradient(' +
-              `${this.countdown.gradient.angle}deg,` +
-              `${ this.countdown.gradient.colors.map((c) => '#' + c.hex).join(', ') })`
-            : '')
-        }
-        onClick={ this.editAction }
-      >
-        <div class='centered'>{
-          this.countdown
-            ? <div>
-                <h3 style={ `color: ${this.correctedColor(0, 0.85)}` }>{ this.countdown.name }</h3>
-                <h5 style={ `color: ${this.correctedColor(0, 0.7)}` }>{ this.formatEndTime(this.countdown.when) }</h5>
-                <h2 style={ `color: ${this.correctedColor(0, -0.15)}` }>{ this.formatUntil(this.countdown) }</h2>
-              </div>
-            : <h2 style={ `color: ${this.correctedColor(0, 0)}` }>Loading</h2>
-        }</div>
-        <div class='deleter'>
-          <v-btn
-            dark
-            icon
-            style={ `color: ${this.correctedColor(0.9, 0.9)}` }
-            onClick={ this.deleteAction }
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </div>
-      </v-card>
+      <div onDblclick={ this.editAction }>
+        <v-card
+          class='rounded-card countdown'
+          style={
+            '--aspect-ratio: 1/1; ' +
+            (this.countdown
+              ? 'background: linear-gradient(' +
+                `${this.countdown.gradient.angle}deg,` +
+                `${ this.countdown.gradient.colors.map((c) => '#' + c.hex).join(', ') })`
+              : '')
+          }
+        >
+          <div class='centered'>{
+            this.countdown
+              ? <div>
+                  <h3 style={ `color: ${this.correctedColor(0, 0.85)}` }>{ this.countdown.name }</h3>
+                  <h5 style={ `color: ${this.correctedColor(0, 0.7)}` }>{ this.formatEndTime(this.countdown.when) }</h5>
+                  <h2 style={ `color: ${this.correctedColor(0, -0.15)}` }>{ this.formatUntil(this.countdown) }</h2>
+                </div>
+              : <h2 style={ `color: ${this.correctedColor(0, 0)}` }>Loading</h2>
+          }</div>
+          <div class='deleter'>
+            <v-btn
+              dark
+              icon
+              style={ `color: ${this.correctedColor(0.9, 0.9)}` }
+              onClick={ this.deleteAction }
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card>
+      </div>
     );
   }
 }

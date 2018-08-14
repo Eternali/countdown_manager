@@ -1,16 +1,36 @@
 <script>
+import { mapState } from 'vuex';
+
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+
 export default {
   name: 'app',
-  data() {
-    return {
-      copyYear: 2018,
-      author: 'Conrad Heidebrecht',
-    };
+  components: {
+    Footer,
+    Header,
+  },
+  computed: {
+    ...mapState([
+      'activeBg',
+    ]),
   },
   render() {
     return (
       <div id="app">
-        <router-view></router-view>
+        <v-app
+          dark
+          style={
+            this.activeBg && this.activeBg.colors
+              ? ('background: linear-gradient(' +
+                `${this.activeBg.angle}deg, ${ this.activeBg.colors.map((c) => '#' + c.hex).join(', ') })`)
+              : ''
+          }
+        >
+          <Header header='Countdown Manager' align='right' />
+          <router-view></router-view>
+          <Footer copyYear={ this.$root.copyYear } author={ this.$root.author } />
+        </v-app>
       </div>
     );
   }

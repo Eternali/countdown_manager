@@ -12,7 +12,6 @@ export default {
   },
   computed: {
     ...mapState([
-      'mainGrad',
       'countdowns',
       'now',
     ]),
@@ -36,7 +35,7 @@ export default {
           now={ this.now }
           fullscreen={ false }
           deleteAction={ this.deleteCountdown }
-          editAction={ () => { this.$router.push({ path: '/edit', params: { index } }); } }
+          editAction={ () => { this.$router.push({ path: 'edit', params: { index } }); } }
         />
       );
     }

@@ -9,13 +9,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'mainGrad',
+      'activeBg',
     ]),
   },
   methods: {
     correctedColor(x, y) {
-      return this.mainGrad.colors
-        ? this.mainGrad.textAt(x, y, '#333333', '#eeeeee')
+      return this.activeBg && this.activeBg.colors
+        ? this.activeBg.textAt(x, y, '#333333', '#eeeeee')
         : '#eeeeee';
     },
   },

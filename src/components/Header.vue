@@ -4,7 +4,7 @@ import { mapState } from 'vuex';
 export default {
   name: 'Header',
   props: {
-    appName: String,
+    header: String,
     align: String,
   },
   data() {
@@ -25,13 +25,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'mainGrad',
+      'activeBg',
     ]),
   },
   methods: {
     correctedColor(x, y) {
-      return this.mainGrad.colors
-        ? this.mainGrad.textAt(x, y, '#333333', '#eeeeee')
+      return this.activeBg && this.activeBg.colors
+        ? this.activeBg.textAt(x, y, '#333333', '#eeeeee')
         : '#eeeeee';
     },
   },
@@ -43,7 +43,7 @@ export default {
           <h2
             style={ `color: ${this.correctedColor(0, 0.9)}` }
           >
-            { this.appName }
+            { this.header }
           </h2>
           <v-spacer></v-spacer>
         </v-toolbar>

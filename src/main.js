@@ -68,6 +68,8 @@ new Vue({
   store,
   data() {
     return {
+      copyYear: 2018,
+      author: 'Conrad Heidebrecht',
       gradients: require('./assets/gradients.json'),
     };
   },
