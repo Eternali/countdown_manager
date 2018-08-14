@@ -23,6 +23,9 @@ export default new Vuex.Store({
     loadCountdown(state, { index, countdown}) {
       state.countdowns.splice(index, 1, countdown);
     },
+    deleteCountdown(state, index) {
+      state.countdowns.splice(index, 1);
+    },
     updateNow(state, current) {
       state.now = current;
     }
@@ -57,6 +60,14 @@ export default new Vuex.Store({
           }
           res();
         }, 2000);
+        }
+      );
+    },
+    deleteCountdown({ commit }, index) {
+      return new Promise(
+        (res, rej) => {
+          commit('deleteCountdown', index);
+          res();
         }
       );
     },

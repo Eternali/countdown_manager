@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueMediaQueryMixin from 'vue-media-query-mixin';
+import VueRouter from 'vue-router';
 import 'vuetify/dist/vuetify.min.css'
 import 'babel-polyfill'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -10,6 +11,10 @@ import 'mdi/css/materialdesignicons.min.css'
 import '@/styles/themes.styl'
 import store from '@/store'
 import App from '@/App.vue'
+import Home from '@/components/Home.vue'
+import AddEdit from '@/components/AddEdit.vue'
+
+Vue.use(VueRouter);
 
 // currently I have to replicate this for both javascript and css use
 Vue.use(
@@ -50,12 +55,21 @@ Vue.config.productionTip = false
 // Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 // Vue.http.headers.common['Access-Control-Request-Method'] = '*'
 
+const router = new VueRouter({
+  routes: [
+    { path: '/home', component: Home },
+    { path: '/new', component: AddEdit },
+    { path: '/edit', component: AddEdit },
+  ]
+});
+
 new Vue({
+  router,
   store,
   data() {
     return {
       gradients: require('./assets/gradients.json'),
     };
   },
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')

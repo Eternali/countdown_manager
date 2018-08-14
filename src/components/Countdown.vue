@@ -52,15 +52,19 @@ export default {
   },
   render() {
     return (
-      <v-card class='rounded-card countdown' style='--aspect-ratio: 1/1;'>
-        <div
-        class='centered'
-        style={ this.countdown
-          ? 'background: linear-gradient(' +
-            `${this.countdown.gradient.angle}deg,` +
-            `${ this.countdown.gradient.colors.map((c) => '#' + c.hex).join(', ') })`
-          : '' }
-        >{
+      <v-card
+        class='rounded-card countdown'
+        style={
+          '--aspect-ratio: 1/1; ' +
+          (this.countdown
+            ? 'background: linear-gradient(' +
+              `${this.countdown.gradient.angle}deg,` +
+              `${ this.countdown.gradient.colors.map((c) => '#' + c.hex).join(', ') })`
+            : '')
+        }
+        onClick={ this.editAction }
+      >
+        <div class='centered'>{
           this.countdown
             ? <div>
                 <h3 style={ `color: ${this.correctedColor(0, 0.85)}` }>{ this.countdown.name }</h3>
@@ -91,13 +95,14 @@ export default {
 
 .countdown:hover
   & .deleter
-    display block
+    opacity 1
 
 .deleter
   position absolute
-  display none
+  opacity 0
   top 0
   right 0
+  transition all 0.2s ease-in-out
 
 .centered
   height 100%

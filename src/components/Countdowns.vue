@@ -26,14 +26,17 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'deleteCountdown',
+    ]),
     buildCountdown(index) {
       return (
         <Countdown
           countdown={ this.countdowns[index] }
           now={ this.now }
           fullscreen={ false }
-          deleteAction={ () => {} }
-          editAction={ () => {} }
+          deleteAction={ this.deleteCountdown }
+          editAction={ () => { this.$router.push({ path: '/edit', params: { index } }); } }
         />
       );
     }

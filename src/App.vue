@@ -1,66 +1,16 @@
 <script>
-import { mapState, mapActions } from 'vuex';
-
-import Countdowns from '@/components/Countdowns.vue'
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
-
 export default {
   name: 'app',
-  components: {
-    Countdowns,
-    Footer,
-    Header,
-  },
   data() {
     return {
       copyYear: 2018,
       author: 'Conrad Heidebrecht',
     };
   },
-  computed: {
-    ...mapState([
-      'mainGrad',
-    ]),
-  },
-  methods: {
-    ...mapActions([
-      'generateBackground',
-      'retrieveCountdownsLength',
-      'retrieveCountdowns',
-      'attachNowUpdater'
-    ]),
-  },
-  mounted() {
-    this.retrieveCountdownsLength()
-      .then((length) => {
-        this.generateBackground({
-          gradPool: this.$root.gradients,
-          angle: Math.floor(Math.random() * 180),
-        });
-        return length;
-      })
-      .then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients, angle: this.mainGrad.angle }))
-      .then((_) => this.attachNowUpdater(window));
-  },
   render() {
     return (
       <div id="app">
-        <v-app
-        dark
-        style={
-            this.mainGrad.colors
-              ? ('background: linear-gradient(' +
-                `${this.mainGrad.angle}deg, ${ this.mainGrad.colors.map((c) => '#' + c.hex).join(', ') })`)
-              : ''
-          }
-        >
-          <Header appName='Countdown Manager' align='right' />
-          <v-content>
-            <Countdowns />
-          </v-content>
-          <Footer copyYear={ this.copyYear } author={ this.author } />
-        </v-app>
+        <router-view></router-view>
       </div>
     );
   }

@@ -74,7 +74,7 @@ export default {
               slot='activator'
               dark
               icon
-              style={ `color: ${this.correctedColor}` }
+              style={ `color: ${this.correctedColor(0.95, 0.95)}` }
             >
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>

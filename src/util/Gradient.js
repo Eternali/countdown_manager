@@ -25,7 +25,13 @@ class Gradient {
     } else {
       index = y > threshold ? 1 : 0;
     }
-    return reversed ? Math.abs(index - 1) : index;
+    return !reversed ? Math.abs(index - 1) : index;
+  }
+
+  colorAt(x, y, reversed = false, angle = this.angle) {
+    let index = this.boundary(x, y, angle);
+    index = reversed ? Math.abs(index - 1) : index;
+    return this.colors[index];
   }
 
   textAt(x, y, dark, light, threshold = 130) {
