@@ -39,6 +39,9 @@ export default {
     return (
       <div>
         <v-toolbar app flat absolute class='transparent'>
+          <v-btn app icon onClick={ this.$router.go(-1) }>
+            {  ? <v-icon>mdi-arrow-left</v-icon> : <div /> }
+          </v-btn>
           <v-spacer></v-spacer>
           <h2
             style={ `color: ${this.correctedColor(0, 0.9)}` }

@@ -85,7 +85,7 @@ export default {
   -moz-osx-font-smoothing grayscale
   text-align center
 
-.rounded-card
+.rounded
   border-radius $cardrad
 
 </style>

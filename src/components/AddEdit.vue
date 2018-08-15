@@ -11,6 +11,7 @@ export default {
   computed: {
     ...mapState([
       'focused',
+      'mainGrad',
     ]),
     ...mapGetters([
       'backgroundAt',
@@ -29,15 +30,15 @@ export default {
   render() {
     return (
       <v-content app>
-        <v-layout justify-center align-center class='mx-2'>
+        <v-layout fill-height justify-center align-center class='mx-2'>
           <v-flex xs12 sm8 md6 lg4 xl2>
             <v-layout column justify-center>
               <v-flex>
                 <v-text-field
                 clearable
                 color={
-                  `grey ${this.backgroundAt(0, 0.8, { hex: false, reversed: true })
-                    .textPrimary('grey darken-2', 'grey lighten-2')}`
+                  `${this.backgroundAt(0, 0.8, { hex: false, reversed: true })
+                    .textPrimary('grey darken-4', 'grey lighten-4')}`
                 }
                 light={ !this.backgroundAt(0, 0.8, { hex: false, reversed: true }).isDark() }
                 dark={ this.backgroundAt(0, 0.8, { hex: false, reversed: true }).isDark() }
@@ -46,6 +47,23 @@ export default {
                 >
                 </v-text-field>
               </v-flex>
+            </v-layout>
+            <div class='py-3' />
+            <v-layout row justify-space-around>
+              <v-btn
+                ripple
+                class='rounded px-4'
+                style={ `background: #${this.mainGrad ? this.mainGrad.colors[0].hex : '333333'}` }
+              >
+                Set Time
+              </v-btn>
+              <v-btn
+                ripple
+                class='rounded px-4'
+                style={ `background: #${this.mainGrad ? this.mainGrad.colors[1].hex : '333333'}` }
+              >
+                Set Date
+              </v-btn>
             </v-layout>
           </v-flex>
         </v-layout>

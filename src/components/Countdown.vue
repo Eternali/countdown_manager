@@ -54,7 +54,7 @@ export default {
     return (
       <div onDblclick={ this.editAction }>
         <v-card
-          class='rounded-card countdown'
+          class='rounded countdown'
           style={
             '--aspect-ratio: 1/1; ' +
             (this.countdown
