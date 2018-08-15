@@ -58,8 +58,7 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes: [
     { path: '/home', component: Home },
-    { path: '/new', component: AddEdit },
-    { path: '/edit', component: AddEdit },
+    { path: '/addedit', component: AddEdit },
   ]
 });
 

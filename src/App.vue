@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
@@ -13,7 +13,20 @@ export default {
   computed: {
     ...mapState([
       'activeBg',
+      'mainGrad',
     ]),
+  },
+  methods: {
+    ...mapActions([
+      'generateBackground',
+    ]),
+  },
+  mounted() {
+    if (!this.mainGrad)
+      this.generateBackground({
+        gradPool: this.$root.gradients,
+        angle: Math.floor(Math.random() * 180),
+      });
   },
   render() {
     return (

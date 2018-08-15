@@ -34,6 +34,18 @@ export default new Vuex.Store({
     deleteCountdown(state, index) {
       state.countdowns.splice(index, 1);
     },
+    addeditCountdown(state) {
+      let index = state.countdowns.map((cd) => cd.id).indexOf(state.focused.id);
+      if (index < 0) {
+        state.countdowns.push(state.focused);
+      } else {
+        state.countdowns.splice(index, 1, state.focused);
+      }
+    },
+    goAddEdit(state, index) { // index of -1 means add, index >= 0 means edit
+      state.focused = index >= 0 ? state.countdowns[index] : new Countdown({  });
+      if (index >= 0) state.activeBg = state.focused.gradient;
+    }
   },
   actions: {
     generateBackground({ commit }, { gradPool, angle }) {
@@ -84,6 +96,18 @@ export default new Vuex.Store({
         }
       );
     },
+    addeditCountdown({ commit }) {
+      return new Promise(
+        (res, rej) => {
+          commit('addeditCountdown');
+          res();
+        }
+      );
+    },
+    goAddEdit({ commit }, { router, index }) { // index of -1 means add, index >= 0 means edit
+      router.push('addedit');
+      commit('goAddEdit', index);
+    },
   },
   getters: {
     countdown(state) {
@@ -92,6 +116,13 @@ export default new Vuex.Store({
         else if (id) return state.countdowns.filter((cd) => cd.id === id)[0];
         else if (name) return state.countdowns.filter((cd) => cd.name === name);
       }
-    }
+    },
+    backgroundAt(state) {
+      return (x, y, { whenEmpty = new Color({ hex: '333333' }), hex = true, reversed = false }) => {
+        if (!state.activeBg || !('colorAt' in state.activeBg)) return whenEmpty;
+        let color = state.activeBg.colorAt(x, y, reversed);
+        return hex ? `#${color.hex}` : color;
+      };
+    },
   },
 })

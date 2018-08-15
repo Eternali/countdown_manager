@@ -27,6 +27,7 @@ export default {
   methods: {
     ...mapActions([
       'deleteCountdown',
+      'goAddEdit',
     ]),
     buildCountdown(index) {
       return (
@@ -35,7 +36,7 @@ export default {
           now={ this.now }
           fullscreen={ false }
           deleteAction={ this.deleteCountdown }
-          editAction={ () => { this.$router.push({ path: 'edit', params: { index } }); } }
+          editAction={ () => { this.goAddEdit({ router: this.$router, index }); } }
         />
       );
     }

@@ -20,7 +20,11 @@ class Color {
   }
 
   textPrimary(dark, light, threshold = 130) {
-    return this.rgba.every((c) => c > threshold) ? dark : light;
+    return this.isDark(threshold) ? light : dark;
+  }
+
+  isDark(threshold = 130) {
+    return this.rgba.every((c) => c < threshold);
   }
 
 }

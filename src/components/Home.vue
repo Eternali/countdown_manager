@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 import Color from '@/util/Color.js'
 import Countdowns from '@/components/Countdowns.vue'
@@ -19,26 +19,31 @@ export default {
       'activeBg',
       'mainGrad',
     ]),
+    ...mapGetters([
+      'backgroundAt',
+    ]),
   },
   methods: {
     ...mapActions([
       'attachNowUpdater',
       'generateBackground',
+      'goAddEdit',
       'goHome',
       'retrieveCountdowns',
       'retrieveCountdownsLength',
     ]),
-    backgroundAt(x, y, hex = true, reversed = false) {
-      if (!('colorAt' in this.activeBg)) return new Color({ hex: '333333' });
-      let color = this.activeBg.colorAt(x, y, reversed);
-      return hex ? `#${color.hex}` : color;
-    },
   },
   mounted() {
-    this.generateBackground({
-      gradPool: this.$root.gradients,
-      angle: Math.floor(Math.random() * 180),
-    })
+    (new Promise((res, rej) => {
+        if (this.mainGrad) {
+          res();
+        } else {
+          this.generateBackground({
+            gradPool: this.$root.gradients,
+            angle: Math.floor(Math.random() * 180),
+          }).then((_) => res());
+        }
+    }))
       .then((_) => this.goHome())
       .then((_) => this.retrieveCountdownsLength())
       .then((length) => this.retrieveCountdowns({ gradPool: this.$root.gradients, angle: this.mainGrad.angle }))
@@ -48,7 +53,7 @@ export default {
           setTimeout(() => {
             this.showNew = true;
             res();
-          }, 500);
+          }, 120);
         }
       ));
   },
@@ -63,11 +68,12 @@ export default {
             fixed
             bottom
             right
-            style={ `background: ${this.backgroundAt(0.95, -0.95, true, true)};` }
-            onClick={ () => { this.$router.push('new'); } }
+            style={ `background: ${this.backgroundAt(0.95, -0.95, { hex: true, reversed: true })};` }
+            onClick={ () => { this.goAddEdit({ router: this.$router, index: -1 }); } }
           >
             <v-icon style={
-              `color: ${this.backgroundAt(0.95, -0.95, false, true).textPrimary('#111111', '#eeeeee') };`
+              `color: ${this.backgroundAt(0.95, -0.95, { hex: false, reversed: true })
+                .textPrimary('#111111', '#eeeeee') };`
             }>mdi-plus</v-icon>
           </v-btn>) : <div/> }
         </v-fab-transition>
