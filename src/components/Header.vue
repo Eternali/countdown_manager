@@ -48,7 +48,7 @@ export default {
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-toolbar app flat absolute class='transparent'>
-          { this.$routerHistory.hasPrevious()
+          { !this.$routerHistory.hasPrevious()
             ? <v-btn flat icon
                 onClick={ () => this.$router.go(-1) }
                 style={ `color: ${this.correctedColor(-0.9, 0.9)}` }
