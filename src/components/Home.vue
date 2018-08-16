@@ -53,7 +53,7 @@ export default {
           setTimeout(() => {
             this.showNew = true;
             res();
-          }, 120);
+          }, 100);
         }
       ));
   },

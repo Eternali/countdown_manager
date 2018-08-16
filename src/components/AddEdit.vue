@@ -1,8 +1,13 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 
+import TimeButton from '@/components/TimeButton.vue'
+
 export default {
   name: 'AddEdit',
+  components: {
+    TimeButton,
+  },
   data() {
     return {
       showSave: false,
@@ -25,7 +30,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.showSave = true;
-    }, 120);
+    }, 100);
   },
   render() {
     return (
@@ -50,16 +55,7 @@ export default {
             </v-layout>
             <div class='py-3' />
             <v-layout row justify-space-around>
-              <v-btn
-                ripple
-                class='rounded px-4'
-                style={
-                  `background: #${this.mainGrad ? this.mainGrad.colors[0].hex : '333333'};` +
-                  `color: #${this.mainGrad ? this.mainGrad.colors[0].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
-                }
-              >
-                { this.focused.when ? this.focused.when.toLocaleTimeString() : 'Set Time' }
-              </v-btn>
+              <TimeButton palette={ this.mainGrad.colors } startTime={ this.focused.when } />
               <v-btn
                 ripple
                 class='rounded px-4'
@@ -81,7 +77,7 @@ export default {
             bottom
             right
             style={ `background: ${this.backgroundAt(0.95, -0.95, { hex: true, reversed: true })};` }
-            onClick={ () => {  } }
+            onClick={ this.addeditCountdown }
           >
             <v-icon style={
               `color: ${this.backgroundAt(0.95, -0.95, { hex: false, reversed: true })
