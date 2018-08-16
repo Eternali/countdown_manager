@@ -48,12 +48,15 @@ export default {
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-toolbar app flat absolute class='transparent'>
-          <v-btn flat icon
-            onClick={ () => this.$router.go(-1) }
-            style={ `color: ${this.correctedColor(-0.9, 0.9)}` }
-          >
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
+          { this.$routerHistory.hasPrevious()
+            ? <v-btn flat icon
+                onClick={ () => this.$router.go(-1) }
+                style={ `color: ${this.correctedColor(-0.9, 0.9)}` }
+              >
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
+            : <div />
+          }
           <v-spacer></v-spacer>
           <v-toolbar-items class='hidden-sm-and-down'>
             {

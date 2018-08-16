@@ -58,7 +58,7 @@ export default {
                   `color: #${this.mainGrad ? this.mainGrad.colors[0].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
                 }
               >
-                Set Time
+                { this.focused.when ? this.focused.when.toLocaleTimeString() : 'Set Time' }
               </v-btn>
               <v-btn
                 ripple
@@ -68,7 +68,7 @@ export default {
                   `color: #${this.mainGrad ? this.mainGrad.colors[1].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
                 }
               >
-                Set Date
+                { this.focused.when ? this.focused.when.toLocaleDateString() : 'Set Date' }
               </v-btn>
             </v-layout>
           </v-flex>

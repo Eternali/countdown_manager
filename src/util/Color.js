@@ -110,7 +110,7 @@ class Color {
   }
 
   isDark(threshold = 130) {
-    return this.rgba.every((c) => c < threshold);
+    return this.rgba.filter((c) => c < threshold).length >= 2;
   }
 
   get complement() {
