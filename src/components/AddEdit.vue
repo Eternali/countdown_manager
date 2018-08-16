@@ -53,14 +53,20 @@ export default {
               <v-btn
                 ripple
                 class='rounded px-4'
-                style={ `background: #${this.mainGrad ? this.mainGrad.colors[0].hex : '333333'}` }
+                style={
+                  `background: #${this.mainGrad ? this.mainGrad.colors[0].hex : '333333'};` +
+                  `color: #${this.mainGrad ? this.mainGrad.colors[0].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
+                }
               >
                 Set Time
               </v-btn>
               <v-btn
                 ripple
                 class='rounded px-4'
-                style={ `background: #${this.mainGrad ? this.mainGrad.colors[1].hex : '333333'}` }
+                style={
+                  `background: #${this.mainGrad ? this.mainGrad.colors[1].hex : '333333'};` +
+                  `color: #${this.mainGrad ? this.mainGrad.colors[1].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
+                }
               >
                 Set Date
               </v-btn>

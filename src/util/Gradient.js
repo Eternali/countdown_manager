@@ -39,11 +39,6 @@ class Gradient {
     return this.colors[this.boundary(x, y)].textPrimary(dark, light, threshold);
   }
 
-  // (0) => y < 0.5 ? 0 : 1;
-  // (90) => x < 0.5 ? 1 : 0;
-  // (180)
-
-
 }
 
 export default Gradient;

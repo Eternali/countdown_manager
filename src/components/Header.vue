@@ -39,9 +39,6 @@ export default {
     return (
       <div>
         <v-toolbar app flat absolute class='transparent'>
-          <v-btn app icon onClick={ this.$router.go(-1) }>
-            {  ? <v-icon>mdi-arrow-left</v-icon> : <div /> }
-          </v-btn>
           <v-spacer></v-spacer>
           <h2
             style={ `color: ${this.correctedColor(0, 0.9)}` }
@@ -51,6 +48,12 @@ export default {
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-toolbar app flat absolute class='transparent'>
+          <v-btn flat icon
+            onClick={ () => this.$router.go(-1) }
+            style={ `color: ${this.correctedColor(-0.9, 0.9)}` }
+          >
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
           <v-spacer></v-spacer>
           <v-toolbar-items class='hidden-sm-and-down'>
             {
@@ -82,7 +85,7 @@ export default {
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
             <v-list>{
-              this.items.map((item, i) => (
+              this.items.map((item) => (
                 <v-list-tile key={ item.name } onClick={ item.click }>
                   <v-list-tile-avatar><v-icon>{ item.icon || '' }</v-icon></v-list-tile-avatar>
                   <v-list-tile-title>{ item.name.toUpperCase() }</v-list-tile-title>
