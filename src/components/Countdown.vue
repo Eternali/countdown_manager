@@ -46,8 +46,12 @@ export default {
     },
     correctedColor(x, y) {
       return this.countdown
-        ? this.countdown.gradient.textAt(x, y, '#333333', '#eeeeee')
-        : '#eeeeee'
+        ? this.countdown.gradient.textAt(
+          x,
+          y,
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark,
+        ) : this.$vuetify.theme.bodyOnDark;
     }
   },
   render() {

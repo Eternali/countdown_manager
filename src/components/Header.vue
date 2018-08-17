@@ -31,8 +31,12 @@ export default {
   methods: {
     correctedColor(x, y) {
       return this.activeBg && this.activeBg.colors
-        ? this.activeBg.textAt(x, y, '#333333', '#eeeeee')
-        : '#eeeeee';
+        ? this.activeBg.textAt(
+          x,
+          y,
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark,
+        ) : this.$vuetify.theme.bodyOnDark;
     },
   },
   render() {

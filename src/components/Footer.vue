@@ -15,14 +15,21 @@ export default {
   methods: {
     correctedColor(x, y) {
       return this.activeBg && this.activeBg.colors
-        ? this.activeBg.textAt(x, y, '#333333', '#eeeeee')
-        : '#eeeeee';
+        ? this.activeBg.textAt(
+          x,
+          y,
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark,
+        ) : this.$vuetify.theme.bodyOnDark;
     },
   },
   render() {
     return (
       <v-footer height='auto' color='transparent' class='mt-1'>
-        <v-flex xs12 py-3 text-xs-center style={ `color: ${this.correctedColor(0, -0.9)}` } class='footer-text'>
+        <v-flex xs12 py-3 text-xs-center
+          style={ `color: ${this.correctedColor(0, -0.9)}` }
+          class='footer-text'
+        >
           &copy; {this.copyYear} - <strong>{ this.author }</strong>
         </v-flex>
       </v-footer>

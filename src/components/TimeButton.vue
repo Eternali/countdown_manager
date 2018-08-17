@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       opened: false,
-      time: this.startTime,
+      time: this.startTime ? `${this.startTime.getHours()}:${this.startTime.getMinutes()}` : null,
     };
   },
   computed: {
@@ -45,13 +45,17 @@ export default {
       return `background: #${this.palette[0].hex}`;
     },
     text() {
-      return this.time || 'Set Time';
+      return this.time
+        ? `${this.time.split(':', 1)[0].padLeft(2, '0')}:${this.time.split(':', 1)[1].padLeft(2, '0')}`
+        : 'Set Time';
     },
   },
   methods: {
     save() {
       this.$refs.dialog.save(this.time);
-      this.$emit('save', this.time);
+      this.startTime.setHours(this.time.split(':')[0]);
+      this.startTime.setMinutes(this.time.split(':', 1)[1]);
+      this.$emit('save', this.startTime);
     }
   },
 }

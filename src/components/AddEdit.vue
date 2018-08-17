@@ -26,6 +26,14 @@ export default {
     ...mapActions([
       'addeditCountdown',
     ]),
+    save() {
+      this.addeditCountdown();
+      this.$router.go(-1);
+    },
+    setTime(newTime) {
+      this.focused.when.setHours(newTime.getHours());
+      this.focused.when.setMinutes(newTime.getMinutes());
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -55,13 +63,23 @@ export default {
             </v-layout>
             <div class='py-3' />
             <v-layout row justify-space-around>
-              <TimeButton palette={ this.mainGrad.colors } startTime={ this.focused.when } />
+              <TimeButton
+                palette={ this.mainGrad.colors }
+                startTime={ this.focused.when }
+                onSave={ this.setTime }
+              />
               <v-btn
                 ripple
                 class='rounded px-4'
                 style={
-                  `background: #${this.mainGrad ? this.mainGrad.colors[1].hex : '333333'};` +
-                  `color: #${this.mainGrad ? this.mainGrad.colors[1].textPrimary('333333', 'eeeeee') : 'eeeeee'};`
+                  `background: #${this.mainGrad ? this.mainGrad.colors[1].hex : this.$vuetify.theme.darkBg};` +
+                  `color: #${this.mainGrad
+                    ? this.mainGrad.colors[1].textPrimary(
+                      this.$vuetify.theme.bodyOnLight,
+                      this.$vuetify.theme.bodyOnDark
+                    )
+                    : this.$vuetify.theme.inputOnLight
+                  };`
                 }
               >
                 { this.focused.when ? this.focused.when.toLocaleDateString() : 'Set Date' }
@@ -77,11 +95,14 @@ export default {
             bottom
             right
             style={ `background: ${this.backgroundAt(0.95, -0.95, { hex: true, reversed: true })};` }
-            onClick={ this.addeditCountdown }
+            onClick={ this.save }
           >
             <v-icon style={
               `color: ${this.backgroundAt(0.95, -0.95, { hex: false, reversed: true })
-                .textPrimary('#111111', '#eeeeee') };`
+                .textPrimary(
+                  this.$vuetify.theme.bodyOnLight,
+                  this.$vuetify.theme.bodyOnDark
+                ) };`
             }>mdi-content-save</v-icon>
           </v-btn>) : <div/> }
         </v-fab-transition>

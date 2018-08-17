@@ -34,11 +34,8 @@ Vue.use(
       subtitleOnLight: '#646464',
       bodyOnDark: '#e0e0e0',
       bodyOnLight: '#1a1a1a',
-      inputOnDark: '#eeeeee',
-      inputOnLight: '#111111',
-      inputCard: '#212121',
-      inputHover: '#656565',
-      inputFocus: '#00796b'
+      darkBg: '#222222',
+      lightBg: '#dddddd',
     }
   }
 );
