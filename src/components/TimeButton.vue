@@ -14,7 +14,7 @@
     class="rounded px-4"
     :style="btnStyle"
   >
-    {{ this.time ? this.time : 'Set Time' }}
+    {{ text }}
   </v-btn>
   <v-time-picker
     v-if="opened"
@@ -42,19 +42,26 @@ export default {
   },
   computed: {
     btnStyle() {
-      return `background: #${this.palette[0].hex}`;
+      return `
+        background: #${this.palette[0].hex};
+        color: #${this.palette[0].textPrimary(
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark
+        )};
+      `;
     },
     text() {
       return this.time
-        ? `${this.time.split(':', 1)[0].padLeft(2, '0')}:${this.time.split(':', 1)[1].padLeft(2, '0')}`
+        ? `${this.time.split(':', 2)[0].padLeft(2, '0')}:${this.time.split(':', 2)[1].padLeft(2, '0')}`
         : 'Set Time';
     },
   },
   methods: {
     save() {
       this.$refs.dialog.save(this.time);
-      this.startTime.setHours(this.time.split(':')[0]);
-      this.startTime.setMinutes(this.time.split(':', 1)[1]);
+      this.startTime = this.startTime || new Date();
+      this.startTime.setHours(this.time.split(':', 2)[0]);
+      this.startTime.setMinutes(this.time.split(':', 2)[1]);
       this.$emit('save', this.startTime);
     }
   },
