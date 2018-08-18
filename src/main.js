@@ -7,10 +7,11 @@ import 'vuetify/dist/vuetify.min.css';
 import 'babel-polyfill';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import 'mdi/css/materialdesignicons.min.css';
+const fb = require('@/firebaseConfig.js');
 
 // import '@/styles/debug.css';
 import '@/styles/themes.styl';
-import store from '@/store';
+import store from '@/store.js';
 import App from '@/App.vue';
 import Home from '@/components/Home.vue';
 import AddEdit from '@/components/AddEdit.vue';
@@ -55,22 +56,31 @@ Vue.config.productionTip = false;
 // Vue.http.headers.common['Access-Control-Request-Method'] = '*'
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     { path: '/home', component: Home },
     { path: '/addedit', component: AddEdit },
+    { path: '*', redirect: '/home' },
   ]
 });
 router.afterEach(writeHistory);
 
-new Vue({
-  router,
-  store,
-  data() {
-    return {
-      copyYear: 2018,
-      author: 'Conrad Heidebrecht',
-      gradients: require('./assets/gradients.json'),
-    };
-  },
-  render: (h) => h(App)
-}).$mount('#app');
+let app;
+fb.auth.onAuthStateChanged((user) => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      data() {
+        return {
+          copyYear: 2018,
+          author: 'Conrad Heidebrecht',
+          gradients: require('./assets/gradients.json'),
+        };
+      },
+      render: (h) => h(App)
+    });
+    app.$mount('#app');
+  }
+});
+

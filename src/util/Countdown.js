@@ -1,13 +1,13 @@
 class Countdown {
 
   constructor({
-    id,
-    name,
+    id = Countdown.generateID(),
+    name = '',
     image,
-    gradient,
-    when,
+    gradient = [],
+    when = new Date(),
   }) {
-    this.id = id || Countdown.generateID();
+    this.id = id;
     this.name = name;
     this.image = image;
     this.gradient = gradient;

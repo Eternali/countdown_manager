@@ -1,8 +1,8 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 
-import Color from '@/util/Color.js'
-import Countdowns from '@/components/Countdowns.vue'
+import Color from '@/util/Color.js';
+import Countdowns from '@/components/Countdowns.vue';
 
 export default {
   name: 'Home',
