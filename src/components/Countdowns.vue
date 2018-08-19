@@ -57,7 +57,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
 

@@ -1,14 +1,16 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 
-import DateButton from '@/components/DateButton.vue'
-import TimeButton from '@/components/TimeButton.vue'
+import DateButton from '@/components/DateButton.vue';
+import TimeButton from '@/components/TimeButton.vue';
+import TextField from '@/components/TextField.vue';
 
 export default {
   name: 'AddEdit',
   components: {
     DateButton,
     TimeButton,
+    TextField,
   },
   data() {
     return {
@@ -60,18 +62,13 @@ export default {
           <v-flex xs12 sm8 md6 lg4 xl2>
             <v-layout column justify-center>
               <v-flex>
-                <v-text-field
-                clearable
-                color={
-                  `${this.backgroundAt(0, 0.8, { hex: false, reversed: true })
-                    .textPrimary('grey darken-4', 'grey lighten-4')}`
-                }
-                light={ !this.backgroundAt(0, 0.8, { hex: false, reversed: true }).isDark() }
-                dark={ this.backgroundAt(0, 0.8, { hex: false, reversed: true }).isDark() }
-                label='Countdown Name'
-                value={ this.focused.name }
-                >
-                </v-text-field>
+                <TextField
+                  backgroundAt={ ({ hex, reversed }) => this.backgroundAt(0, 0.8, { hex, reversed }) }
+                  darkColor='grey darken-4'
+                  lightColor='grey lighten-4'
+                  label='Countdown Name'
+                  value={ this.focused.name }
+                />
               </v-flex>
             </v-layout>
             <div class='py-3' />
@@ -114,7 +111,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
 

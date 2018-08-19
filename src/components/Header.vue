@@ -20,8 +20,9 @@ export default {
           builder: (isToolbar, colHex) => <LoginDialog
             keyName='login'
             isToolbar={ isToolbar }
-            color={ colHex }
+            btnColor={ colHex }
             showGreeting={ false }
+            gradient={ this.activeBg }
           />
         },
         {
@@ -100,7 +101,7 @@ export default {
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-toolbar app flat absolute class='transparent'>
-          { !this.$routerHistory.hasPrevious()
+          { this.$routerHistory.hasPrevious()
             ? <v-btn flat icon
                 onClick={ () => this.$router.go(-1) }
                 style={ `color: ${this.correctedColor(-0.9, 0.9)}` }
@@ -139,7 +140,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
 

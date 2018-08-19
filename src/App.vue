@@ -1,20 +1,32 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue';
+import Header from '@/components/Header.vue';
+import LoginDialog from '@/components/LoginDialog.vue';
 
 export default {
   name: 'app',
   components: {
     Footer,
     Header,
+    LoginDialog,
+  },
+  data() {
+    return {
+      showGreeting: false,
+    };
   },
   computed: {
     ...mapState([
       'activeBg',
       'mainGrad',
     ]),
+    reversedBg() {
+      let grad = Object.assign({  }, this.activeBg);
+      grad.angle += 180;
+      return grad;
+    },
   },
   methods: {
     ...mapActions([
@@ -27,6 +39,9 @@ export default {
         gradPool: this.$root.gradients,
         angle: Math.floor(Math.random() * 180),
       });
+    window.setTimeout(() => {
+      this.showGreeting = true;
+    }, 750);
   },
   render() {
     return (
@@ -36,11 +51,19 @@ export default {
           style={
             this.activeBg && this.activeBg.colors
               ? ('background: linear-gradient(' +
-                `${this.activeBg.angle}deg, ${ this.activeBg.colors.map((c) => '#' + c.hex).join(', ') })`)
+                `${this.activeBg.angle}deg, ${this.activeBg.colors.map((c) => '#' + c.hex).join(', ')})`)
               : ''
           }
         >
           <Header header='Countdown Manager' align='right' />
+          <LoginDialog
+            keyName='login'
+            btnColor={ 'ffffff' }
+            isToolbar={ null }
+            showGreeting={ true }
+            bindOpen={ this.showGreeting }
+            gradient={ this.reversedBg }
+          />
           <router-view></router-view>
           <Footer copyYear={ this.$root.copyYear } author={ this.$root.author } />
         </v-app>
@@ -50,7 +73,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 @import './styles/themes.styl'
 @import url(https://fonts.googleapis.com/css?family=Orbitron)
 

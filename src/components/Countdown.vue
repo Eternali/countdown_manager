@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/boxes.css'
 @import '../styles/themes.styl'
 

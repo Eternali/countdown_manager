@@ -1,104 +1,136 @@
 <template>
-<div>
-  <v-dialog
-    v-if="isToolbar"
-    ref="dialog"
-    v-model="opened"
-    lazy
-    full-width
-    width="290px"
+<v-dialog
+  ref='dialog'
+  v-model='opened'
+  lazy
+  full-width
+  max-width='390px'
+>
+  <div v-if='noBody' />
+  <v-btn
+    v-if='isToolbar'
+    slot='activator'
+    left
+    flat
+    :key='keyName'
+    :style='btnStyle'
   >
-    <v-btn
-      slot="activator"
-      left
-      flat
-      :key="keyName"
-      :style="style"
-    >
-      <v-icon large style="padding-top: 25%; padding-bottom: 25%;">{{ icon }}</v-icon>
-    </v-btn>
-    <v-layout v-if="opened" column justify-center align-center>
-      <v-flex>
-        <v-text-field
-        clearable
+    <v-icon large style='padding-top: 25%; padding-bottom: 25%;'>{{ icon }}</v-icon>
+  </v-btn>
+  <v-list-tile v-if='isDropdown' slot='activator' :key='keyName' @click='empty'>
+    <v-list-tile-avatar>
+      <v-icon>{{ icon }}</v-icon>
+    </v-list-tile-avatar>
+    <v-list-tile-title>
+      {{ displayName.toUpperCase() }}
+    </v-list-tile-title>
+  </v-list-tile>
+  <v-layout
+    v-if='opened'
+    column
+    justify-center
+    align-center
+    class='px-3 py-3 login'
+    :style='mainStyle'
+  >
+    <h2 v-if='showGreeting'>
+      Hi there! If you like, you can link your email so your countdowns are synced
+      across devices. If not, you can always complete this later from the sign-in
+      icon in the menu.
+    </h2>
+    <v-flex>
+      <TextField
+        :backgroundAt='backgroundCurry(0, -0.2, gradient)'
+        darkColor='grey darken-4'
+        lightColor='grey lighten-4'
         label='Email'
-        >
-        </v-text-field>
-      </v-flex>
+        :value='email'
+      />
+    </v-flex>
+    <v-layout row>
+      <v-spacer />
+      <v-btn flat @click='opened = false'>Cancel</v-btn>
+      <v-btn flat @click='login'>Confirm</v-btn>
     </v-layout>
-  </v-dialog>
-  <div v-if="!isToolbar">
-    <v-dialog
-      ref="dialog"
-      v-model="opened"
-      lazy
-      full-width
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-    >
-      <v-list-tile slot="activator" :key="keyName" @click="test">
-        <v-list-tile-avatar>
-          <v-icon>{{ icon }}</v-icon>
-        </v-list-tile-avatar>
-        <v-list-tile-title>
-          {{ displayName.toUpperCase() }}
-        </v-list-tile-title>
-      </v-list-tile>
-      <v-layout column v-if="opened">
-        test
-      </v-layout>
-    </v-dialog>
-  </div>
-</div>
+  </v-layout>
+</v-dialog>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import TextField from '@/components/TextField.vue';
+
 export default {
   name: 'LoginDialog',
   props: {
     keyName: String,
-    color: String,
+    btnColor: String,
+    gradient: Object,
     isToolbar: Boolean,
     showGreeting: Boolean,
+    initiallyOpen: Boolean,
+    bindOpen: Boolean,
+  },
+  components: {
+    TextField,
   },
   data() {
     return {
       displayName: 'LOGIN',
       icon: 'mdi-account',
-      opened: false,
+      selfOpened: this.initiallyOpen || false,
+      email: '',
+      isDropdown: this.isToolbar === false,
+      noBody: this.isToolbar === null,
     };
   },
   computed: {
-    style() {
-      return `color: ${this.color};`;
+    ...mapGetters([
+      'backgroundAt',
+    ]),
+    opened: {
+      get() {
+        if (this.bindOpen !== undefined) return this.bindOpen;
+        return this.selfOpened;
+      },
+      set(isOpened) {
+        this.selfOpened = isOpened;
+      }
+    },
+    btnStyle() {
+      return `color: ${this.btnColor};`;
+    },
+    mainStyle() {
+      return this.gradient && this.gradient.colors
+        ? 'background: linear-gradient(' +
+          `${this.gradient.angle}deg, ` +
+          `${this.gradient.colors.map((c) => '#' + c.hex).join(', ')})`
+        : `background: ${this.$vuetify.theme.darkBg}`;
     },
   },
   methods: {
-    test() {},
-    body() {
-      return (
-        <v-layout column justify-center align-center>
-          {
-            this.showGreeting
-              ? <h2></h2>
-              : null
-          }
-          <v-flex>
-            <v-text-field
-            clearable
-            label='Email'
-            >
-            </v-text-field>
-          </v-flex>
-        </v-layout>
-      );
+    empty() {  },
+    correctedColor(x, y) {
+      return this.gradient && this.gradient.colors
+        ? this.gradient.textAt(
+          x,
+          y,
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark,
+        ) : this.$vuetify.theme.bodyOnDark;
+    },
+    backgroundCurry(x, y, gradientOverride) {
+      return ({ hex, reversed }) => this.backgroundAt(x, y, { hex, reversed, gradientOverride });
+    },
+    login() {
+      
     },
   },
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
 

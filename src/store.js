@@ -118,9 +118,13 @@ export default new Vuex.Store({
       }
     },
     backgroundAt(state) {
-      return (x, y, { whenEmpty = new Color({ hex: '333333' }), hex = true, reversed = false }) => {
-        if (!state.activeBg || !('colorAt' in state.activeBg)) return whenEmpty;
-        let color = state.activeBg.colorAt(x, y, reversed);
+      return (
+        x, y,
+        { whenEmpty = new Color({ hex: '333333' }), hex = true, reversed = false, gradientOverride }
+      ) => {
+        let bg = gradientOverride || state.activeBg;
+        if (!bg || !('colorAt' in bg)) return whenEmpty;
+        let color = bg.colorAt(x, y, reversed);
         return hex ? `#${color.hex}` : color;
       };
     },

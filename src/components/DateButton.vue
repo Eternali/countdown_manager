@@ -1,29 +1,29 @@
 <template>
 <v-dialog
-  ref="dialog"
-  v-model="opened"
-  :return-value.sync="date"
+  ref='dialog'
+  v-model='opened'
+  :return-value.sync='date'
   persistent
   lazy
   full-width
-  width="290px"
+  width='290px'
 >
   <v-btn
-    slot="activator"
+    slot='activator'
     ripple
-    class="rounded px-4"
-    :style="btnStyle"
+    class='rounded px-4'
+    :style='btnStyle'
   >
     {{ text }}
   </v-btn>
   <v-date-picker
-    v-if="opened"
+    v-if='opened'
     reactive
-    v-model="date"
+    v-model='date'
   >
     <v-spacer />
-    <v-btn flat @click="opened = false">Cancel</v-btn>
-    <v-btn flat @click="save()">OK</v-btn>
+    <v-btn flat @click='opened = false'>Cancel</v-btn>
+    <v-btn flat @click='save()'>OK</v-btn>
   </v-date-picker>
 </v-dialog>
 </template>
@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
 
