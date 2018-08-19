@@ -12,7 +12,7 @@
       slot="activator"
       left
       flat
-      :key="name"
+      :key="keyName"
       :style="style"
     >
       <v-icon large style="padding-top: 25%; padding-bottom: 25%;">{{ icon }}</v-icon>
@@ -37,12 +37,12 @@
       hide-overlay
       transition="dialog-bottom-transition"
     >
-      <v-list-tile slot="activator" :key="name" @click="test">
+      <v-list-tile slot="activator" :key="keyName" @click="test">
         <v-list-tile-avatar>
           <v-icon>{{ icon }}</v-icon>
         </v-list-tile-avatar>
         <v-list-tile-title>
-          {{ name.toUpperCase() }}
+          {{ displayName.toUpperCase() }}
         </v-list-tile-title>
       </v-list-tile>
       <v-layout column v-if="opened">
@@ -57,13 +57,15 @@
 export default {
   name: 'LoginDialog',
   props: {
-    name: String,
-    icon: String,
+    keyName: String,
     color: String,
     isToolbar: Boolean,
+    showGreeting: Boolean,
   },
   data() {
     return {
+      displayName: 'LOGIN',
+      icon: 'mdi-account',
       opened: false,
     };
   },
@@ -73,7 +75,25 @@ export default {
     },
   },
   methods: {
-    test() {}
+    test() {},
+    body() {
+      return (
+        <v-layout column justify-center align-center>
+          {
+            this.showGreeting
+              ? <h2></h2>
+              : null
+          }
+          <v-flex>
+            <v-text-field
+            clearable
+            label='Email'
+            >
+            </v-text-field>
+          </v-flex>
+        </v-layout>
+      );
+    },
   },
 }
 </script>

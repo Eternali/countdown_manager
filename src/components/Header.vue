@@ -17,12 +17,11 @@ export default {
       items: [
         {
           name: 'login',
-          icon: 'mdi-account',
           builder: (isToolbar, colHex) => <LoginDialog
-            name='login'
-            icon='mdi-account'
+            keyName='login'
             isToolbar={ isToolbar }
             color={ colHex }
+            showGreeting={ false }
           />
         },
         {
