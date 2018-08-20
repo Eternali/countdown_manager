@@ -4,7 +4,7 @@
   v-model='opened'
   lazy
   full-width
-  max-width='390px'
+  max-width='420px'
 >
   <div v-if='noBody' />
   <v-btn
@@ -34,21 +34,24 @@
     :style='mainStyle'
   >
     <h2 v-if='showGreeting'>
-      Hi there! If you like, you can link your email so your countdowns are synced
-      across devices. If not, you can always complete this later from the sign-in
-      icon in the menu.
+      <span class='bigger'>Hi there!</span><br />
+      Login or sign up with your email so your countdowns are synced across devices.<br />
+      <span class='smaller'>(You can always complete this later from the menu in the top right.)</span>
     </h2>
-    <v-flex>
-      <TextField
-        :backgroundAt='backgroundCurry(0, -0.2, gradient)'
-        darkColor='grey darken-4'
-        lightColor='grey lighten-4'
-        label='Email'
-        :value='email'
-      />
+    <v-flex xs12 sm10 md8 lg6>
+      <v-layout column justify-center>
+        <v-flex>
+          <TextField
+            :backgroundAt='backgroundCurry(0, -0.2, gradient)'
+            darkColor='grey darken-4'
+            lightColor='grey lighten-4'
+            label='Email'
+            :value='email'
+          />
+        </v-flex>
+      </v-layout>
     </v-flex>
-    <v-layout row>
-      <v-spacer />
+    <v-layout row align-end justify-end>
       <v-btn flat @click='opened = false'>Cancel</v-btn>
       <v-btn flat @click='login'>Confirm</v-btn>
     </v-layout>
@@ -70,7 +73,10 @@ export default {
     isToolbar: Boolean,
     showGreeting: Boolean,
     initiallyOpen: Boolean,
-    bindOpen: Boolean,
+    bindOpen: {
+      type: Boolean,
+      default: null,
+    },
   },
   components: {
     TextField,
@@ -91,11 +97,13 @@ export default {
     ]),
     opened: {
       get() {
-        if (this.bindOpen !== undefined) return this.bindOpen;
+        if (this.bindOpen !== null) return this.bindOpen;
         return this.selfOpened;
       },
       set(isOpened) {
         this.selfOpened = isOpened;
+        if (this.bindOpen !== null)
+          this.$emit('requestChange', this.selfOpened);
       }
     },
     btnStyle() {
@@ -133,6 +141,10 @@ export default {
 <style lang='stylus' scoped>
 @import '../styles/themes.styl'
 
+.bigger
+  font-size 1.2em
 
+.smaller
+  font-size 0.8em
 
 </style>

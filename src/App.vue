@@ -58,11 +58,12 @@ export default {
           <Header header='Countdown Manager' align='right' />
           <LoginDialog
             keyName='login'
-            btnColor={ 'ffffff' }
+            btnColor={ '#ffffff' }
             isToolbar={ null }
             showGreeting={ true }
             bindOpen={ this.showGreeting }
             gradient={ this.reversedBg }
+            onRequestChange={ (event) => this.showGreeting = event }
           />
           <router-view></router-view>
           <Footer copyYear={ this.$root.copyYear } author={ this.$root.author } />

@@ -19,8 +19,8 @@ export default {
           name: 'login',
           builder: (isToolbar, colHex) => <LoginDialog
             keyName='login'
-            isToolbar={ isToolbar }
             btnColor={ colHex }
+            isToolbar={ isToolbar }
             showGreeting={ false }
             gradient={ this.activeBg }
           />
