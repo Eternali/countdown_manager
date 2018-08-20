@@ -35,7 +35,7 @@
   >
     <h2 v-if='showGreeting'>
       <span class='bigger'>Hi there!</span><br />
-      Login or sign up with your email so your countdowns are synced across devices.<br />
+      Register with your email so your countdowns are synced across devices.<br />
       <span class='smaller'>(You can always complete this later from the menu in the top right.)</span>
     </h2>
     <v-flex xs12 sm10 md8 lg6>
@@ -51,9 +51,10 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-layout row align-end justify-end>
-      <v-btn flat @click='opened = false'>Cancel</v-btn>
-      <v-btn flat @click='login'>Confirm</v-btn>
+    <v-layout row align-center justify-end>
+      <v-spacer />
+      <v-btn flat @click='opened = false' :style='cancelColor'>Cancel</v-btn>
+      <v-btn flat @click='login' color='error'>Confirm</v-btn>
     </v-layout>
   </v-layout>
 </v-dialog>
@@ -116,16 +117,19 @@ export default {
           `${this.gradient.colors.map((c) => '#' + c.hex).join(', ')})`
         : `background: ${this.$vuetify.theme.darkBg}`;
     },
+    cancelColor() {
+      return `color: ${this.correctedColor(-0.25, -0.4)};`;
+    },
   },
   methods: {
     empty() {  },
-    correctedColor(x, y) {
+    correctedColor(x, y, darkOverride, lightOverride) {
       return this.gradient && this.gradient.colors
         ? this.gradient.textAt(
           x,
           y,
-          this.$vuetify.theme.bodyOnLight,
-          this.$vuetify.theme.bodyOnDark,
+          darkOverride || this.$vuetify.theme.bodyOnLight,
+          lightOverride || this.$vuetify.theme.bodyOnDark,
         ) : this.$vuetify.theme.bodyOnDark;
     },
     backgroundCurry(x, y, gradientOverride) {
