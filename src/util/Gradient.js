@@ -39,6 +39,13 @@ class Gradient {
     return this.colors[this.boundary(x, y)].textPrimary(dark, light, threshold);
   }
 
+  clone() {
+    return new Gradient(
+      [...this.colors],
+      this.angle
+    );
+  }
+
 }
 
 export default Gradient;

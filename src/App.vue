@@ -23,7 +23,7 @@ export default {
       'mainGrad',
     ]),
     reversedBg() {
-      let grad = Object.assign({  }, this.activeBg);
+      let grad = this.activeBg ? this.activeBg.clone() : {  };
       grad.angle += 180;
       return grad;
     },
