@@ -6,13 +6,25 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
 fun main(args: Array<String>) {
-    val server = embeddedServer(Netty, port = 5050) {
+    val server = embeddedServer(Netty, port = 5343) {
         routing {
-            get("/") {
+            get("/register") {
                 call.respondText("Hello World!", ContentType.Text.Plain)
             }
-            get("/demo") {
+            get("/length-{uid}") {
                 call.respondText("HELLO WORLD!")
+            }
+            get('/cd-{uid}{cid}') {
+
+            }
+            post('/cd-{uid}{cid}') {
+
+            }
+            update('/cd-{uid}{cid}') {
+
+            }
+            delete('/cd-{uid}{cid}') {
+
             }
         }
     }

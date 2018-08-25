@@ -54,7 +54,9 @@
     <v-layout row align-center justify-end>
       <v-spacer />
       <v-btn flat @click='opened = false' :style='cancelColor'>Cancel</v-btn>
-      <v-btn flat @click='login' color='error'>Confirm</v-btn>
+      <v-btn flat @click='login' :style='cancelColor'>
+        <strong>Confirm</strong>
+      </v-btn>
     </v-layout>
   </v-layout>
 </v-dialog>
@@ -137,6 +139,7 @@ export default {
     },
     login() {
       
+      this.opened = false;
     },
   },
 }
