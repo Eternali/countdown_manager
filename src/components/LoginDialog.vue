@@ -29,27 +29,35 @@
     v-if='opened'
     column
     justify-center
-    align-center
     class='px-3 py-3 login'
     :style='mainStyle'
   >
     <h2 v-if='showGreeting'>
       <span class='bigger'>Hi there!</span><br />
-      Register with your email so your countdowns are synced across devices.<br />
+      Register with your email so your countdowns can be synced across devices.<br />
       <span class='smaller'>(You can always complete this later from the menu in the top right.)</span>
     </h2>
-    <v-flex xs12 sm10 md8 lg6>
-      <v-layout column justify-center>
-        <v-flex>
-          <TextField
-            :backgroundAt='backgroundCurry(0, -0.2, gradient)'
-            darkColor='grey darken-4'
-            lightColor='grey lighten-4'
-            label='Email'
-            :value='email'
-          />
-        </v-flex>
-      </v-layout>
+    <v-flex xs12 class='pt-2 pb-1'>
+      <TextField
+        :backgroundAt='backgroundCurry(0, -0.2, gradient)'
+        darkColor='grey darken-4'
+        lightColor='grey lighten-4'
+        label='Email'
+        type='email'
+        :rules='emailRules'
+        :value='email'
+      />
+    </v-flex>
+    <v-flex xs12 class='pt-1 pb-2'>
+      <TextField
+        :backgroundAt='backgroundCurry(0, -0.4, gradient)'
+        darkColor='grey darken-4'
+        lightColor='grey lighten-4'
+        label='Password'
+        type='password'
+        :rules='passwordRules'
+        :value='password'
+      />
     </v-flex>
     <v-layout row align-center justify-end>
       <v-spacer />
@@ -64,6 +72,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { sha3_256 } from 'js-sha3';
+import PasswordValidator from 'password-validator';
 
 import TextField from '@/components/TextField.vue';
 
@@ -90,8 +100,17 @@ export default {
       icon: 'mdi-account',
       selfOpened: this.initiallyOpen || false,
       email: '',
+      password: '',
       isDropdown: this.isToolbar === false,
       noBody: this.isToolbar === null,
+      emailRules: [
+        (v) => !!v || 'An email is required.',
+        (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Invalid email.'
+      ],
+      passwordRules: [
+        (v) => v.length > 6 || 'Must be greater than 6 characters',
+        (v) => /[0-9]+/.test(v) || 'Must contain at least one digit.'
+      ],
     };
   },
   computed: {
@@ -122,6 +141,9 @@ export default {
     cancelColor() {
       return `color: ${this.correctedColor(-0.25, -0.4)};`;
     },
+    hashedPassword() {
+      return sha3_256(this.password);
+    }
   },
   methods: {
     empty() {  },

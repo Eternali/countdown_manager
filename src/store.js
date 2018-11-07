@@ -14,6 +14,7 @@ export default new Vuex.Store({
     now: new Date(),
     countdowns: [],
     focused: null,
+    authToken: '',
   },
   mutations: {
     generateBackground(state, { gradPool, angle }) {
@@ -48,6 +49,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    login({ commit }, { email, hashedPassword }) {
+
+    },
+    logout({ commit }) {
+
+    },
     generateBackground({ commit }, { gradPool, angle }) {
       commit('generateBackground', { gradPool, angle });
     },
