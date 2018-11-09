@@ -1,5 +1,5 @@
-import firebase from 'firebase';
-import 'firebase/firestore';
+import firebase from 'firebase'
+import 'firebase/firestore'
 
 // Initialize Firebase
 let config = {
@@ -9,23 +9,23 @@ let config = {
   projectId: "countdownmanager",
   storageBucket: "countdownmanager.appspot.com",
   messagingSenderId: "717123491434"
-};
-firebase.initializeApp(config);
+}
+firebase.initializeApp(config)
 
 // firebase utils
-const db = firebase.firestore();
-const auth = firebase.auth();
-const currentUser = auth.currentUser;
+const db = firebase.firestore()
+const auth = firebase.auth()
+const currentUser = auth.currentUser
 
 // date issue fix according to firebase
 const settings = {
   timestampsInSnapshots: true
-};
-db.settings(settings);
+}
+db.settings(settings)
 
 // firebase collections
-const usersCollection = db.collection('users');
-const countdownCollection = db.collection('countdowns');
+const usersCollection = db.collection('users')
+const countdownCollection = db.collection('countdowns')
 
 export {
   db,
@@ -33,4 +33,4 @@ export {
   currentUser,
   usersCollection,
   countdownCollection,
-};
+}

@@ -41,7 +41,7 @@ export default {
       date: this.startDate
         ? `${this.startDate.getFullYear()}-${this.startDate.getMonth()}-${this.startDate.getDate()}`
         : null,
-    };
+    }
   },
   computed: {
     btnStyle() {
@@ -51,24 +51,24 @@ export default {
           this.$vuetify.theme.bodyOnLight,
           this.$vuetify.theme.bodyOnDark
         )};
-      `;
+      `
     },
     text() {
       return this.date
         ? this.date.split('-', 3)[0] + '-' +
           this.date.split('-', 3)[1].padLeft(2, '0') + '-' +
           this.date.split('-', 3)[2].padLeft(2, '0')
-        : 'Set Date';
+        : 'Set Date'
     },
   },
   methods: {
     save() {
-      this.$refs.dialog.save(this.date);
-      this.startDate = this.startDate || new Date();
-      this.startDate.setFullYear(this.date.split('-', 3)[0]);
-      this.startDate.setMonth(this.date.split('-', 3)[1]);
-      this.startDate.setDate(this.date.split('-', 3)[2]);
-      this.$emit('save', this.startDate);
+      this.$refs.dialog.save(this.date)
+      this.startDate = this.startDate || new Date()
+      this.startDate.setFullYear(this.date.split('-', 3)[0])
+      this.startDate.setMonth(this.date.split('-', 3)[1])
+      this.startDate.setDate(this.date.split('-', 3)[2])
+      this.$emit('save', this.startDate)
     }
   },
 }

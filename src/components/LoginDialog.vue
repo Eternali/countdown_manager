@@ -48,7 +48,7 @@
         :value='email'
       />
     </v-flex>
-    <v-flex xs12 class='pt-1 pb-2'>
+    <v-flex xs12 :class='["pt-1", isSignup ? "pb-1" : "pb-2"]'>
       <TextField
         :backgroundAt='backgroundCurry(0, -0.4, gradient)'
         darkColor='grey darken-4'
@@ -59,23 +59,37 @@
         :value='password'
       />
     </v-flex>
+    <v-flex v-if='isSignup' xs12 class='pt-1 pb-2'>
+      <TextField
+        :backgroundAt='backgroundCurry(0, -0.4, gradient)'
+        darkColor='grey darken-4'
+        lightColor='grey lighten-4'
+        label='Confirm Password'
+        type='password'
+        :rules='passwordRules'
+        :value='passwordConfirm'
+      />
+    </v-flex>
+    <v-flex v-if='failedLogin' xs12 center class='pb-2 fail-text'>
+      Invalid email or password.
+    </v-flex>
     <v-layout row align-center justify-end>
+      <v-btn flat @click='isSignup = !isSignup'>{{ isSignup ? 'login' : 'signup' }}</v-btn>
       <v-spacer />
-      <v-btn flat @click='opened = false' :style='cancelColor'>Cancel</v-btn>
-      <v-btn flat @click='login' :style='cancelColor'>
-        <strong>Confirm</strong>
-      </v-btn>
+      <v-btn @click='cancel' class='rounded' color='grey darken-1' :style='cancelStyle'>Cancel</v-btn>
+      <v-btn @click='callLogin' class='rounded' :style='confirmStyle'>Confirm</v-btn>
     </v-layout>
   </v-layout>
 </v-dialog>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { sha3_256 } from 'js-sha3';
-import PasswordValidator from 'password-validator';
+import { mapGetters, mapActions } from 'vuex'
+import { sha3_256 } from 'js-sha3'
 
-import TextField from '@/components/TextField.vue';
+import TextField from '@/components/TextField.vue'
+
+import Color from '@/util/Color'
 
 export default {
   name: 'LoginDialog',
@@ -90,6 +104,10 @@ export default {
       type: Boolean,
       default: null,
     },
+    isSignup: {
+      type: Boolean,
+      default: false
+    },
   },
   components: {
     TextField,
@@ -101,6 +119,8 @@ export default {
       selfOpened: this.initiallyOpen || false,
       email: '',
       password: '',
+      passwordConfirm: '',
+      failedLogin: false,
       isDropdown: this.isToolbar === false,
       noBody: this.isToolbar === null,
       emailRules: [
@@ -109,9 +129,10 @@ export default {
       ],
       passwordRules: [
         (v) => v.length > 6 || 'Must be greater than 6 characters',
-        (v) => /[0-9]+/.test(v) || 'Must contain at least one digit.'
+        (v) => /[0-9]+/.test(v) || 'Must contain at least one digit.',
+        (_) => this.password === this.passwordConfirm || 'The passwords do not match'
       ],
-    };
+    }
   },
   computed: {
     ...mapGetters([
@@ -119,33 +140,47 @@ export default {
     ]),
     opened: {
       get() {
-        if (this.bindOpen !== null) return this.bindOpen;
-        return this.selfOpened;
+        if (this.bindOpen !== null) return this.bindOpen
+        return this.selfOpened
       },
       set(isOpened) {
-        this.selfOpened = isOpened;
+        this.selfOpened = isOpened
         if (this.bindOpen !== null)
-          this.$emit('requestChange', this.selfOpened);
+          this.$emit('requestChange', this.selfOpened)
       }
     },
     btnStyle() {
-      return `color: ${this.btnColor};`;
+      return `color: ${this.btnColor};`
     },
     mainStyle() {
       return this.gradient && this.gradient.colors
         ? 'background: linear-gradient(' +
           `${this.gradient.angle}deg, ` +
           `${this.gradient.colors.map((c) => '#' + c.hex).join(', ')})`
-        : `background: ${this.$vuetify.theme.darkBg}`;
+        : `background: ${this.$vuetify.theme.darkBg}`
     },
-    cancelColor() {
-      return `color: ${this.correctedColor(-0.25, -0.4)};`;
+    cancelStyle() {
+      return `color: #${this.$vuetify.theme.bodyOnDark}`
+    },
+    confirmStyle() {
+      const bg = this.backgroundCurry(-0.25, -0.4, this.gradient)
+      return `
+        background: ${bg()};
+        color: #${bg({ hex: false }).textPrimary(
+          this.$vuetify.theme.bodyOnLight,
+          this.$vuetify.theme.bodyOnDark
+        )};
+      `
     },
     hashedPassword() {
-      return sha3_256(this.password);
+      return sha3_256(this.password)
     }
   },
   methods: {
+    ...mapActions([
+      'login',
+      'logout',
+    ]),
     empty() {  },
     correctedColor(x, y, darkOverride, lightOverride) {
       return this.gradient && this.gradient.colors
@@ -154,14 +189,23 @@ export default {
           y,
           darkOverride || this.$vuetify.theme.bodyOnLight,
           lightOverride || this.$vuetify.theme.bodyOnDark,
-        ) : this.$vuetify.theme.bodyOnDark;
+        ) : this.$vuetify.theme.bodyOnDark
     },
     backgroundCurry(x, y, gradientOverride) {
-      return ({ hex, reversed }) => this.backgroundAt(x, y, { hex, reversed, gradientOverride });
+      return ({ hex, reversed } = {}) => this.backgroundAt(x, y, { hex, reversed, gradientOverride })
     },
-    login() {
-      
-      this.opened = false;
+    cancel() {
+      this.opened = false
+    },
+    callLogin() {
+      console.log(this.password)
+      this.login({
+        email: this.email,
+        hashedPassword: this.hashedPassword,
+      }).then((isLoggedIn) => {
+        if (isLoggedIn) this.opened = false
+        else this.failedLogin = true
+      })
     },
   },
 }
@@ -175,5 +219,8 @@ export default {
 
 .smaller
   font-size 0.8em
+
+.fail-text
+  color red
 
 </style>

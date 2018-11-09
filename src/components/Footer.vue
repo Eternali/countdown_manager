@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 
 export default {
   name: 'Footer',
@@ -20,7 +20,7 @@ export default {
           y,
           this.$vuetify.theme.bodyOnLight,
           this.$vuetify.theme.bodyOnDark,
-        ) : this.$vuetify.theme.bodyOnDark;
+        ) : this.$vuetify.theme.bodyOnDark
     },
   },
   render() {
@@ -33,7 +33,7 @@ export default {
           &copy; {this.copyYear} - <strong>{ this.author }</strong>
         </v-flex>
       </v-footer>
-    );
+    )
   }
 }
 </script>

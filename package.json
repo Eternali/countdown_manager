@@ -13,9 +13,9 @@
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^0.28.11",
-    "firebase": "^5.4.0",
     "js-sha3": "^0.8.0",
     "material-design-icons-iconfont": "^3.0.3",
+    "moment": "^2.22.2",
     "style-loader": "^0.21.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
@@ -44,7 +44,12 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "semi": [
+        "error",
+        "never"
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

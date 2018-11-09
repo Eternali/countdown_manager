@@ -1,9 +1,9 @@
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex'
 
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
-import LoginDialog from '@/components/LoginDialog.vue';
+import Footer from '@/components/Footer.vue'
+import Header from '@/components/Header.vue'
+import LoginDialog from '@/components/LoginDialog.vue'
 
 export default {
   name: 'app',
@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       showGreeting: false,
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -23,9 +23,9 @@ export default {
       'mainGrad',
     ]),
     reversedBg() {
-      let grad = this.activeBg ? this.activeBg.clone() : {  };
-      grad.angle += 180;
-      return grad;
+      let grad = this.activeBg ? this.activeBg.clone() : {  }
+      grad.angle += 180
+      return grad
     },
   },
   methods: {
@@ -38,10 +38,10 @@ export default {
       this.generateBackground({
         gradPool: this.$root.gradients,
         angle: Math.floor(Math.random() * 180),
-      });
+      })
     window.setTimeout(() => {
-      this.showGreeting = true;
-    }, 750);
+      this.showGreeting = true
+    }, 750)
   },
   render() {
     return (
@@ -64,12 +64,13 @@ export default {
             bindOpen={ this.showGreeting }
             gradient={ this.reversedBg }
             onRequestChange={ (event) => this.showGreeting = event }
+            isSignup={ true }
           />
           <router-view></router-view>
           <Footer copyYear={ this.$root.copyYear } author={ this.$root.author } />
         </v-app>
       </div>
-    );
+    )
   }
 }
 </script>

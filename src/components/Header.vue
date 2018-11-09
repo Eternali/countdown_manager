@@ -1,7 +1,7 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 
-import LoginDialog from '@/components/LoginDialog.vue';
+import LoginDialog from '@/components/LoginDialog.vue'
 
 export default {
   name: 'Header',
@@ -40,7 +40,7 @@ export default {
           },
         },
       ],
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -55,10 +55,10 @@ export default {
           y,
           this.$vuetify.theme.bodyOnLight,
           this.$vuetify.theme.bodyOnDark,
-        ) : this.$vuetify.theme.bodyOnDark;
+        ) : this.$vuetify.theme.bodyOnDark
     },
     renderToolbarItem(item, i) {
-      let colHex = this.correctedColor(0.9 - 0.05 * i, 0.9);
+      let colHex = this.correctedColor(0.9 - 0.05 * i, 0.9)
       return item.builder
         ? item.builder(true, colHex)
         : item.icon
@@ -75,7 +75,7 @@ export default {
             style={ `color: ${colHex}` }
           >
             item.name
-          </v-btn>);
+          </v-btn>)
     },
     renderMenuItem(item, i) {
       return item.builder
@@ -85,7 +85,7 @@ export default {
             <v-list-tile-avatar><v-icon>{ item.icon || '' }</v-icon></v-list-tile-avatar>
             <v-list-tile-title>{ item.name.toUpperCase() }</v-list-tile-title>
           </v-list-tile>
-        );
+        )
     },
   },
   render() {
@@ -135,7 +135,7 @@ export default {
           </v-menu>
         </v-toolbar>
       </div>
-    );
+    )
   }
 }
 </script>

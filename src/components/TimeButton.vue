@@ -38,7 +38,7 @@ export default {
     return {
       opened: false,
       time: this.startTime ? `${this.startTime.getHours()}:${this.startTime.getMinutes()}` : null,
-    };
+    }
   },
   computed: {
     btnStyle() {
@@ -48,21 +48,21 @@ export default {
           this.$vuetify.theme.bodyOnLight,
           this.$vuetify.theme.bodyOnDark
         )};
-      `;
+      `
     },
     text() {
       return this.time
         ? `${this.time.split(':', 2)[0].padLeft(2, '0')}:${this.time.split(':', 2)[1].padLeft(2, '0')}`
-        : 'Set Time';
+        : 'Set Time'
     },
   },
   methods: {
     save() {
-      this.$refs.dialog.save(this.time);
-      this.startTime = this.startTime || new Date();
-      this.startTime.setHours(this.time.split(':', 2)[0]);
-      this.startTime.setMinutes(this.time.split(':', 2)[1]);
-      this.$emit('save', this.startTime);
+      this.$refs.dialog.save(this.time)
+      this.startTime = this.startTime || new Date()
+      this.startTime.setHours(this.time.split(':', 2)[0])
+      this.startTime.setMinutes(this.time.split(':', 2)[1])
+      this.$emit('save', this.startTime)
     }
   },
 }

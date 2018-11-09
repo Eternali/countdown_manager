@@ -1,9 +1,9 @@
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex'
 
-import DateButton from '@/components/DateButton.vue';
-import TimeButton from '@/components/TimeButton.vue';
-import TextField from '@/components/TextField.vue';
+import DateButton from '@/components/DateButton.vue'
+import TimeButton from '@/components/TimeButton.vue'
+import TextField from '@/components/TextField.vue'
 
 export default {
   name: 'AddEdit',
@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       showSave: false,
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -26,10 +26,10 @@ export default {
       'backgroundAt',
     ]),
     datePalette() {
-      return this.mainGrad ? this.mainGrad.colors.map((_, c, arr) => arr[arr.length - 1 - c]) : [];
+      return this.mainGrad ? this.mainGrad.colors.map((_, c, arr) => arr[arr.length - 1 - c]) : []
     },
     timePalette() {
-      return this.mainGrad ? this.mainGrad.colors : [];
+      return this.mainGrad ? this.mainGrad.colors : []
     },
   },
   methods: {
@@ -37,23 +37,23 @@ export default {
       'addeditCountdown',
     ]),
     save() {
-      this.addeditCountdown();
-      this.$router.go(-1);
+      this.addeditCountdown()
+      this.$router.go(-1)
     },
     setTime(newTime) {
-      this.focused.when.setHours(newTime.getHours());
-      this.focused.when.setMinutes(newTime.getMinutes());
+      this.focused.when.setHours(newTime.getHours())
+      this.focused.when.setMinutes(newTime.getMinutes())
     },
     setDate(newDate) {
-      this.focused.when.setFullYear(newDate.getFullYear());
-      this.focused.when.setMonth(newDate.getMonth());
-      this.focused.when.setDate(newDate.getDate());
+      this.focused.when.setFullYear(newDate.getFullYear())
+      this.focused.when.setMonth(newDate.getMonth())
+      this.focused.when.setDate(newDate.getDate())
     },
   },
   mounted() {
     setTimeout(() => {
-      this.showSave = true;
-    }, 100);
+      this.showSave = true
+    }, 100)
   },
   render() {
     return (
@@ -106,7 +106,7 @@ export default {
           </v-btn>) : <div/> }
         </v-fab-transition>
       </v-content>
-    );
+    )
   }
 }
 </script>

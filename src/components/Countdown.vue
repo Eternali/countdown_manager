@@ -13,16 +13,16 @@ export default {
   },
   methods: {
     formatEndTime(when) {
-      return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString();
+      return when.toLocaleDateString() + ' - ' + when.toLocaleTimeString()
     },
     dateComponent(name, value, forceDraw = false, isEnd = false) {
-      let aval = Math.abs(value);
+      let aval = Math.abs(value)
       return aval !== 0 || forceDraw
         ? (<span class='unit'>
             <span class='value'>{ aval.toString().padLeft(2, '0') }</span>
             { `${name}${Math.abs(aval) > 1 ? 's' : ''}${isEnd ? '' : ' '}` }
           </span>)
-        : '';
+        : ''
     },
     isNegative(duration) {
       return duration.seconds() < 0 ||
@@ -30,10 +30,10 @@ export default {
         duration.hours() < 0 ||
         duration.days() < 0 ||
         duration.months() < 0 ||
-        duration.years() < 0;
+        duration.years() < 0
     },
     formatUntil(countdown) {
-      let diff = countdown.until(this.now);
+      let diff = countdown.until(this.now)
       return (<div>
         { this.dateComponent('year', diff.years()) }
         { this.dateComponent('month', diff.months()) }
@@ -42,7 +42,7 @@ export default {
         { this.dateComponent('minute', diff.minutes()) }
         { this.dateComponent('second', diff.seconds(), true, true) }
         { this.isNegative(diff) ? '(past)' : '' }
-      </div>);
+      </div>)
     },
     correctedColor(x, y) {
       return this.countdown
@@ -51,7 +51,7 @@ export default {
           y,
           this.$vuetify.theme.bodyOnLight,
           this.$vuetify.theme.bodyOnDark,
-        ) : this.$vuetify.theme.bodyOnDark;
+        ) : this.$vuetify.theme.bodyOnDark
     }
   },
   render() {
@@ -89,7 +89,7 @@ export default {
           </div>
         </v-card>
       </div>
-    );
+    )
   }
 }
 </script>

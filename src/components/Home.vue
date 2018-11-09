@@ -1,8 +1,8 @@
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex'
 
-import Color from '@/util/Color.js';
-import Countdowns from '@/components/Countdowns.vue';
+import Color from '@/util/Color.js'
+import Countdowns from '@/components/Countdowns.vue'
 
 export default {
   name: 'Home',
@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       showNew: false,
-    };
+    }
   },
   computed: {
     ...mapState([
@@ -36,12 +36,12 @@ export default {
   mounted() {
     (new Promise((res, rej) => {
         if (this.mainGrad) {
-          res();
+          res()
         } else {
           this.generateBackground({
             gradPool: this.$root.gradients,
             angle: Math.floor(Math.random() * 180),
-          }).then((_) => res());
+          }).then((_) => res())
         }
     }))
       .then((_) => this.goHome())
@@ -51,11 +51,11 @@ export default {
       .then((_) => new Promise(
         (res, rej) => {
           setTimeout(() => {
-            this.showNew = true;
-            res();
-          }, 100);
+            this.showNew = true
+            res()
+          }, 100)
         }
-      ));
+      ))
   },
   render() {
     return (
@@ -69,7 +69,7 @@ export default {
             bottom
             right
             style={ `background: ${this.backgroundAt(0.95, -0.95, { hex: true, reversed: true })};` }
-            onClick={ () => { this.goAddEdit({ router: this.$router, index: -1 }); } }
+            onClick={ () => { this.goAddEdit({ router: this.$router, index: -1 }) } }
           >
             <v-icon style={
               `color: ${this.backgroundAt(0.95, -0.95, { hex: false, reversed: true })
@@ -78,7 +78,7 @@ export default {
           </v-btn>) : <div/> }
         </v-fab-transition>
       </v-content>
-    );
+    )
   }
 }
 </script>
