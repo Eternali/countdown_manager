@@ -10,10 +10,11 @@ import 'mdi/css/materialdesignicons.min.css'
 
 // import '@/styles/debug.css';
 import '@/styles/themes.styl'
-import store from '@/store.js'
-import App from '@/App.vue'
-import Home from '@/components/Home.vue'
-import AddEdit from '@/components/AddEdit.vue'
+import store from '@/store'
+import App from '@/App'
+import Home from '@/components/Home'
+import AddEdit from '@/components/AddEdit'
+import Settings from '@/components/Settings'
 
 Vue.use(VueRouter)
 Vue.use(routerHistory)
@@ -59,6 +60,7 @@ const router = new VueRouter({
   routes: [
     { path: '/home', component: Home },
     { path: '/addedit', component: AddEdit },
+    { path: '/settings', component: Settings },
     { path: '*', redirect: '/home' },
   ]
 })

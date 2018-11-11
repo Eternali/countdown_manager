@@ -1,9 +1,9 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
-import LoginDialog from '@/components/LoginDialog.vue'
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
+import LoginDialog from '@/components/LoginDialog'
 
 export default {
   name: 'app',

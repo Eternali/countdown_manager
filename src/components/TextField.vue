@@ -1,6 +1,6 @@
 <template>
 <v-text-field
-  v-model='value'
+  v-model='model'
   :clearable='clearable'
   :color='background.textPrimary(this.darkColor, this.lightColor)'
   :light='!background.isDark()'
@@ -36,21 +36,20 @@ export default {
   },
   data() {
     return {
-      model: this.value,
-      show: false
-    }
-  },
-  computed: {
-    model: {
-      get(v) { return v },
-      set(v) {
-        
-      }
+      show: false,
+      inModel: this.value
     }
   },
   computed: {
     background() {
       return this.backgroundAt({ hex: false, reversed: true })
+    },
+    model: {
+      get() { return this.inModel },
+      set(v) {
+        this.$emit('change', v)
+        this.inModel = v
+      }
     }
   }
 }

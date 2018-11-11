@@ -1,9 +1,9 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 
-import DateButton from '@/components/DateButton.vue'
-import TimeButton from '@/components/TimeButton.vue'
-import TextField from '@/components/TextField.vue'
+import DateButton from '@/components/DateButton'
+import TimeButton from '@/components/TimeButton'
+import TextField from '@/components/TextField'
 
 export default {
   name: 'AddEdit',

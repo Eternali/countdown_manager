@@ -46,6 +46,7 @@
         type='email'
         :rules='emailRules'
         :value='email'
+        @change='(v) => email = v'
       />
     </v-flex>
     <v-flex xs12 :class='["pt-1", isSignup ? "pb-1" : "pb-2"]'>
@@ -57,6 +58,7 @@
         type='password'
         :rules='passwordRules'
         :value='password'
+        @change='(v) => password = v'
       />
     </v-flex>
     <v-flex v-if='isSignup' xs12 class='pt-1 pb-2'>
@@ -66,12 +68,13 @@
         lightColor='grey lighten-4'
         label='Confirm Password'
         type='password'
-        :rules='passwordRules'
+        :rules='passwordConfirmRules'
         :value='passwordConfirm'
+        @change='(v) => passwordConfirm = v'
       />
     </v-flex>
     <v-flex v-if='failedLogin' xs12 center class='pb-2 fail-text'>
-      Invalid email or password.
+      {{ failedLogin.msg ? `${failedLogin.msg}` : '' }}
     </v-flex>
     <v-layout row align-center justify-end>
       <v-btn flat @click='isSignup = !isSignup'>{{ isSignup ? 'login' : 'signup' }}</v-btn>
@@ -87,9 +90,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { sha3_256 } from 'js-sha3'
 
-import TextField from '@/components/TextField.vue'
-
-import Color from '@/util/Color'
+import TextField from '@/components/TextField'
 
 export default {
   name: 'LoginDialog',
@@ -104,7 +105,7 @@ export default {
       type: Boolean,
       default: null,
     },
-    isSignup: {
+    signup: {
       type: Boolean,
       default: false
     },
@@ -120,7 +121,8 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
-      failedLogin: false,
+      failedLogin: {  },
+      isSignup: this.signup,
       isDropdown: this.isToolbar === false,
       noBody: this.isToolbar === null,
       emailRules: [
@@ -129,9 +131,11 @@ export default {
       ],
       passwordRules: [
         (v) => v.length > 6 || 'Must be greater than 6 characters',
-        (v) => /[0-9]+/.test(v) || 'Must contain at least one digit.',
-        (_) => this.password === this.passwordConfirm || 'The passwords do not match'
+        (v) => /[0-9]+/.test(v) || 'Must contain at least one digit.'
       ],
+      passwordConfirmRules: [
+        (v) => this.password === v || 'The passwords do not match'
+      ]
     }
   },
   computed: {
@@ -198,14 +202,21 @@ export default {
       this.opened = false
     },
     callLogin() {
-      console.log(this.password)
-      this.login({
-        email: this.email,
-        hashedPassword: this.hashedPassword,
-      }).then((isLoggedIn) => {
-        if (isLoggedIn) this.opened = false
-        else this.failedLogin = true
-      })
+      if (!this.email) {
+        this.failedLogin = { msg: 'Email must not be empty' }
+      } else if (!this.password) {
+        this.failedLogin = { msg: 'Password must not be empty' }
+      } else if (this.isSignup && this.password !== this.passwordConfirm) {
+        this.failedLogin = { msg: 'The passwords do not match' }
+      } else {
+        this.login({
+          email: this.email,
+          hashedPassword: this.hashedPassword,
+        }).then((resp) => {
+          if (resp === true) this.opened = false
+          else this.failedLogin = resp
+        })
+      }
     },
   },
 }

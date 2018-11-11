@@ -1,7 +1,7 @@
 <script>
 import { mapState } from 'vuex'
 
-import LoginDialog from '@/components/LoginDialog.vue'
+import LoginDialog from '@/components/LoginDialog'
 
 export default {
   name: 'Header',
@@ -28,14 +28,14 @@ export default {
         {
           name: 'settings',
           icon: 'mdi-settings',
-          click() {
-
+          click: () => {
+            this.$router.push('settings')
           },
         },
         {
           name: 'about',
           icon: 'mdi-information',
-          click() {
+          click: () => {
             
           },
         },

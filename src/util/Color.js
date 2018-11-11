@@ -1,6 +1,12 @@
 // NOTE: All HSV calculations taken from:
 // https://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour
 
+export const ColorMode = {
+  FULL: 'all gradients',
+  GREY: 'greyscale',
+}
+Object.freeze(ColorMode)
+
 class Color {
 
   constructor({ hex, rgba, hsv }) {

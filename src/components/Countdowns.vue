@@ -1,8 +1,8 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import Countdown from './Countdown.vue'
-import GridView from './GridView.vue'
+import Countdown from './Countdown'
+import GridView from './GridView'
 
 export default {
   name: 'Countdowns',

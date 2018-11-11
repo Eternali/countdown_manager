@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import Color from '@/util/Color.js'
+import Color, { ColorMode } from '@/util/Color.js'
 import Countdown from '@/util/Countdown.js'
 import Gradient from '@/util/Gradient.js'
 import api from '@/util/RestApi.js'
@@ -16,6 +16,7 @@ export default new Vuex.Store({
     countdowns: [],
     focused: null,
     loggedIn: false,
+    colorMode: ColorMode.FULL
   },
   mutations: {
     login(state) {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     goAddEdit(state, index) { // index of -1 means add, index >= 0 means edit
       state.focused = index >= 0 ? state.countdowns[index] : new Countdown({  })
       if (index >= 0) state.activeBg = state.focused.gradient
+    },
+    setColorMode(state, mode) {
+      state.colorMode = mode
     }
   },
   actions: {
@@ -62,7 +66,10 @@ export default new Vuex.Store({
           api.initialize(response.data.token)
           commit('login')
           return true
-        }, (err) => false)
+        }, (err) => ({
+          code: err.response.status,
+          msg: err.message
+        }))
     },
     logout({ commit }) {
       
